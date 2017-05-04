@@ -24,7 +24,6 @@ read_transline()
 
 {
   long name;
-  modeldata *modptr;
   int bad_dev;
   int type;
 
@@ -157,7 +156,6 @@ double *dataptr;
 {
   long n1_plus, n2_plus, n1_minus, n2_minus;
   branch_marker *bmarker;
-  device *temp_dev;
 
   switch (type)
   {
@@ -312,7 +310,6 @@ int type;
 double *dataptr;
 long n1_plus, n1_minus, n2_plus, n2_minus;
 {
-  int i;
   char *data;
   dev_tran_noloss *temp;
   sub_tran_noloss *temp_sub;
@@ -373,7 +370,6 @@ trans_matrix()
 
 {
   dev_tran_noloss *temp_noloss;
-  m_data *temp_m;
   device *temp_dev;
   int exist;
 
@@ -596,7 +592,6 @@ double *hptr;
 {
   dev_tran_noloss *temp_noloss;
   device *temp_dev;
-  int index, exist;
   double g_val;
 
 
@@ -714,7 +709,6 @@ double *hptr;
 {
   dev_tran_noloss *temp_noloss;
   device *temp_dev;
-  int index, exist;
   double g_val, vval, ival;
 
 
@@ -770,10 +764,8 @@ int subtype;
 device *temp_dev;
 {
   long plus1, minus1, plus2, minus2; 
-  double i1, i2;
   double plus1_val, minus1_val, plus2_val, minus2_val;
   double zo, is1past, is2past, is1, is2;
-  modeldata *mod;
 
   switch (temp_dev->type)
   {

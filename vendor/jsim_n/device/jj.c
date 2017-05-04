@@ -18,6 +18,7 @@
 #include "jsim_n.h"
 #include "extern_n.h"
 
+#include <stdlib.h>
 
 void
 read_jj()
@@ -106,7 +107,9 @@ read_jj()
     jj_to_devlist(name, JJ, nodeptr, intptr, dataptr, modptr);
   }
   else
+  {
     jj_to_deftree(dev_name, JJ, nodeptr, intptr, dataptr, modptr);
+  }
 
 }   /* read_jj */
 
@@ -374,7 +377,6 @@ jj_matrix()
 
 {
   dev_jj *temp;
-  m_data *temp_m;
   mod_jj *temp_mod;
   device *temp_dev;
   int exist;
@@ -572,7 +574,6 @@ double *hptr;
   double source_val, phi_guess, sval;
   double xn1, xn1d, yn1, yn1d, two_c_hn;
   int current_piece;
-  int tempc;
 
   temp_dev = jj;
 

@@ -136,7 +136,7 @@ long *nodeptr;
 long *intptr;
 double *dataptr;
 {
-  int branch;
+  int branch = 0;
   long name;
 
   name = (long) dev_name;
@@ -162,10 +162,7 @@ int type;
 char *data;
 {
   int n_plus, n_minus, branch; 
-  int i, temp_int;
-  double temp_data[7];
   long name;
-  char *primary_name, *second_name, *con_dev;
   branch_marker *bmarker;
 
   name = add_realname(combine_string(namestring, dev_name));
@@ -313,7 +310,6 @@ double *hptr;
 {
   dev_ind *temp;
   device *temp_dev;
-  int exist;
   double xn1, xn1d, two_l_hn;
 
   temp_dev = ind;
@@ -350,7 +346,6 @@ ind_step_limit(current_step)
 double current_step;
 {
   flux_check_list *temp_fcheck;
-  device *temp_dev;
   dev_ind *temp_ind;
   double smallest;
   double h;
@@ -391,13 +386,9 @@ double step;
 double *newstep;
 {
   dev_ind *temp_ind;
-  device *temp_dev;
   flux_check_list *temp_flux;
-  double temp_h;
-  double xn1, yn1;
   double h, smallest;
   double delta_flux;
-  double large_delta_flux;
 
 
   temp_flux = fcheck_list;

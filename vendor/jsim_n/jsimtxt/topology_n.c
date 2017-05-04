@@ -329,7 +329,6 @@ int source_only;
   int i;
   node_to_eqn *temp, *temp2;
   branch_list *temp_branch;
-  realname_name *temp_name;
 
   for(i = 0; i <= RANGE; i++)
   {

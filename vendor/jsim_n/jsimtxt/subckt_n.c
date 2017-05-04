@@ -30,6 +30,9 @@
 #include "jsim_n.h"
 #include "extern_n.h"
 
+#include <stdlib.h>
+#include <string.h>
+
 long name;
 modeldata *modptr;
 
@@ -388,7 +391,6 @@ void
 do_sub_ckt()
 
 {
-  int tempint;
   char *sub_def_name;
   char *sub_ckt_name;
   device *temp_dev;
@@ -430,7 +432,6 @@ void
 expand_sub_ckt()
 
 {
-  int tempint;
   device *temp_dev;
   device *sub_to_devlist();
 

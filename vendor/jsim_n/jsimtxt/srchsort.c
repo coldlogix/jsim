@@ -18,6 +18,9 @@
 #include "jsim_n.h"
 #include "extern_n.h"
 
+#include <stdlib.h>
+#include <string.h>
+
 long *temp_array;
 
 
@@ -261,7 +264,6 @@ long dev_count;
 {
   long i, *temp_dev_array;
   device *temp_dev;
-  int tempint;
   
   if (dev_count <= 0) return(NULL);
 
@@ -415,7 +417,6 @@ long sub_def_count;
 {
   long i, *temp_sub_def_array, *get_dev_array();
   sub_def *temp_sub_def;
-  int tempint;
   
   if (sub_def_count <= 0) return(NULL);
 
@@ -469,7 +470,6 @@ char *name;
 {
   int lower, mid, upper;
   int temp;
-  int tempint;
 
   lower = 0;
   upper = sub_def_count - 1;

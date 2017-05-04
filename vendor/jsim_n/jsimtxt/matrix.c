@@ -18,6 +18,7 @@
 #include "jsim_n.h"
 #include "extern_n.h"
 
+#include <stdlib.h>
 
 m_data *
 find_i_j(A, i, j)
@@ -45,7 +46,6 @@ matrix *A;
 int i, j, *exist;
 {
    m_data *d_ptr, *temp1;
-   int tempint;
 
    temp1 = A->rowptr[i];
    
@@ -392,7 +392,6 @@ int ca, cb, need_diag;
   m_data *c1_c1, *c1_pre, *c2_c2, *c2_pre;
   m_data *temp;
   int c1, c2, temp_int;
-  long temp_long;
   
   if (ca == cb) return;
   else if (ca < cb) 
@@ -582,8 +581,6 @@ add_unknown(x, i)
 unknown *x;
 int i;
 {
-  int tempint;
-
   if (x[i] != NULL) return(x[i]);
 
   x[i] = (x_data *) mycalloc(1, sizeof(x_data));
@@ -634,7 +631,6 @@ int pivot_type, allow_fillin;
   int d_pivot_failed;
   double temp_val;
   pivot_row_data  *pivot_row;
-  int tempint;
 
   d_pivot_failed = 0;
   pivot_row = (pivot_row_data *) 

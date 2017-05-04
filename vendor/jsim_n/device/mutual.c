@@ -25,7 +25,6 @@ read_mut()
 {
   long name;
   char *primary_name, *second_name;
-  int tempint;
   int bad_dev;
 
   bad_dev = FALSE;
@@ -115,7 +114,7 @@ int type;
 char *data;
 {
   long name;
-  char *primary_name, *second_name, *con_dev;
+  char *primary_name, *second_name;
 
   name = add_realname(combine_string(namestring, dev_name));
 
@@ -147,7 +146,6 @@ char *primary_name, *second_name;
   char *data;
   dev_mut *temp;
   sub_mut *temp_sub;
-  int tempint;
    
   if (current_sub_def == NULL)
   {
@@ -262,7 +260,6 @@ double *hptr;
 {
   dev_mut *temp;
   device *temp_dev;
-  int exist, tempint;
   double xn1, xn1d, yn1, yn1d, two_l_hn;
 
   temp_dev = mut;

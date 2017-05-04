@@ -30,6 +30,9 @@
 #include "jsim_n.h"
 #include "extern_n.h"
 
+#include <string.h>
+#include <stdlib.h>
+
 extern FILE *fp;
 
 

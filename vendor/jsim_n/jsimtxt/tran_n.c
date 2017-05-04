@@ -30,6 +30,7 @@
 #include "jsim_n.h"
 #include "extern_n.h"
 
+#include <stdlib.h>
 
 void
 read_tran()
@@ -124,9 +125,7 @@ double *hptr;
   double smallest;
   double h;
   double xnd, xn1d, xn2d, xnddd;
-  int status;
   int i;
-  int tempc;
 
   if (current_step <= 0.0) 
   {
@@ -398,7 +397,7 @@ double *hptr;
 
   printf("%-19s%6d     %-19s%6d\n","loop count",loop_count,
         "predictor count",guess_step_count);
-  printf("%-19s%6d     %-19s%6d\n","timestep count",timestep_count,
+  printf("%-19s%6d     %-19s%6ld\n","timestep count",timestep_count,
         "LU count",lu_count);
   printf("%-19s%6ld     %-19s%6.3f\n","Solve count",solve_count,
         "solve ratio",lu_solve_ratio);
@@ -413,7 +412,6 @@ int source_only;
 double *hptr;
 {
   int converged, nonlinear_count;
-  int temp;
   int need_lu;
 
   nonlinear_count = 0;
@@ -516,11 +514,7 @@ converge()
 
 {
   long i;
-  int converged;
   double delta, xn, xguess;
-  device *temp_dev;
-  dev_jj *temp_jj;
-  double temp_vn;
 
 /* SRW ** Note:  Only junction phase is convergence tested, unlike
  * jspice3 which also checks junction voltage.  Setting the following
@@ -539,8 +533,12 @@ converge()
  */
 
 /*
-
-  temp_dev = jj;  
+ int converged;
+ device *temp_dev;
+ dev_jj *temp_jj;
+ double temp_vn;
+ 
+  temp_dev = jj;
 
   while (temp_dev != NULL)
   {
@@ -921,7 +919,6 @@ find_phi(hptr)
 
 double *hptr;
 {
-  int i;
   device *temp_dev;
   dev_jj *temp_jj;
   double xn, xn1, yn, yn1;
@@ -1020,7 +1017,6 @@ matrix_iteration_update(source_only, hptr)
 int source_only;
 double *hptr;
 {
-  int temp;
   int need_lu;
   
   jj_fix_trap(source_only, &need_lu, hptr);

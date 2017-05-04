@@ -262,7 +262,6 @@ double *hptr;
 {
   dev_cap *temp;
   device *temp_dev;
-  int exist;
   double xn1, xn1d, yn1, yn1d, two_c_hn, sval;
 
   temp_dev = cap;

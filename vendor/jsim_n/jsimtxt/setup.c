@@ -19,6 +19,9 @@
 #include "extern_n.h"
 #include <time.h>
 
+#include <stdlib.h>
+#include <string.h>
+
 static FILE *dbfp;
 FILE *rawfp;
 int raw_cntr;
@@ -260,7 +263,6 @@ read_deck()
 
 {
   int i;
-  char c;
   long np, vp, place;
   printdata *pl;
 
@@ -489,8 +491,6 @@ void
 read_option()
 
 {
-  int type;
-
   while ((read_error = read_string("")) == OK)
   {
     switch(get_string_keyword(tempstring))
@@ -674,7 +674,6 @@ setup_x_unknown()
 
 {
   int i, j;
-  int tempint;
 
   for (i = 0; i <= eqn_count; i++)
   {
@@ -868,7 +867,7 @@ long dev_count;
   long i;
 
   for (i = 0; i < dev_count; i++)
-    printf("dev %s %d\n", 
+    printf("dev %s %lu\n", 
            ((device *) *(dev_array + i))->name,
            strlen((char*)((device *) *(dev_array + i))->name));
 
@@ -879,7 +878,6 @@ void
 print_devlist()
 
 {
-  int i;
   device *temp;
   dev_resis *temp_resis;
   dev_cap *temp_cap;
@@ -889,7 +887,6 @@ print_devlist()
   dev_isource *temp_is;
   dev_mut *temp_mut;
   dev_tran_noloss *temp_tran_noloss;
-  dev_sub_ckt *temp_sub_ckt;
   realname_name *temp_name;
 
   if (jsim_dbg == FALSE) return;
@@ -1211,7 +1208,6 @@ print_modlist()
 {
   mod_jj *temp_jj;
   modeldata *temp_model;
-  int i;
 
   if (jsim_dbg == FALSE) return;
   if (dbfp == NULL) return;

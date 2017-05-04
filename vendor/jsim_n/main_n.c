@@ -53,6 +53,8 @@
 #include <sys/types.h>
 #include <sys/timeb.h>
 
+#include <stdlib.h>
+
 #if __STDC__
 static void run_jsim(void);
 static void do_opts(char*);

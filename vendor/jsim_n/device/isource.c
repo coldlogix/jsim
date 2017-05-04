@@ -108,7 +108,7 @@ issub_to_devlist(dev_name, data)
 char *dev_name;
 char *data;
 {
-  int n_plus, n_minus, branch; 
+  int n_plus, n_minus; 
   long name;
   branch_marker *bmarker;
   dev_isource *temp_is;
@@ -159,11 +159,8 @@ void
 is_matrix()
 
 {
-  m_data *temp_m;
   device *temp_dev;
   dev_isource *temp_is;
-  int i, exist;
-  double val;
 
   temp_dev = isource;
 

@@ -30,6 +30,7 @@
 #include "jsim_n.h"
 #include "extern_n.h"
 
+#include <stdlib.h>
 
 char *
 read_function(ftype)

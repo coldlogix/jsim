@@ -166,7 +166,6 @@ vs_matrix()
   device *temp_dev;
   dev_vsource *temp_vs;
   int exist;
-  double val;
 
   temp_dev = vsource;
 
@@ -284,7 +283,6 @@ double *hptr;
   device *temp_dev;
   dev_vsource *temp_vs;
   double temp_val;
-  int index;
 
   
   temp_dev = vsource;
