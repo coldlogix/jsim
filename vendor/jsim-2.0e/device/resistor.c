@@ -37,14 +37,16 @@ read_resis()
   }
 
   if (bad_dev == FALSE)
-  if (current_sub_def == NULL)
   {
-    name = add_realname(dev_name);
-    resis_to_devlist(name, RESIS, nodeptr, dataptr);
-  }
-  else
-  {
-    resis_to_deftree(dev_name, RESIS, nodeptr, dataptr);
+    if (current_sub_def == NULL)
+    {
+      name = add_realname(dev_name);
+      resis_to_devlist(name, RESIS, nodeptr, dataptr);
+    }
+    else
+    {
+      resis_to_deftree(dev_name, RESIS, nodeptr, dataptr);
+    }
   }
 
 }   /* read_resis */

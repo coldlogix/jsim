@@ -43,15 +43,17 @@ read_mut()
   }
 
   if (bad_dev == FALSE)
-  if (current_sub_def == NULL)
   {
-    name = add_realname(dev_name);
-    mut_to_devlist(name, MUTUAL_L, (long *) primary_name, 
+    if (current_sub_def == NULL)
+    {
+      name = add_realname(dev_name);
+      mut_to_devlist(name, MUTUAL_L, (long *) primary_name, 
+                   (long *) second_name, dataptr);
+    }
+    else
+      mut_to_deftree(dev_name, MUTUAL_L, (long *) primary_name, 
                    (long *) second_name, dataptr);
   }
-  else
-    mut_to_deftree(dev_name, MUTUAL_L, (long *) primary_name, 
-                   (long *) second_name, dataptr);
 
 }   /* read_mut */
 

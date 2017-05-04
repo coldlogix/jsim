@@ -378,7 +378,7 @@ time_loop(double *hptr)
 
   printf("%-19s%6d     %-19s%6d\n","loop count",loop_count,
         "predictor count",guess_step_count);
-  printf("%-19s%6d     %-19s%6d\n","timestep count",timestep_count,
+  printf("%-19s%6d     %-19s%6ld\n","timestep count",timestep_count,
         "LU count",lu_count);
   printf("%-19s%6ld     %-19s%6.3f\n","Solve count",solve_count,
         "solve ratio",lu_solve_ratio);

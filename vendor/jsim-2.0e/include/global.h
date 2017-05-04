@@ -69,8 +69,8 @@ double vs_min_inc;
 double vs_max_inc;
 double is_min_inc;
 double is_max_inc;
-double nu_min_sample;
-double nu_segment;
+int nu_min_sample;
+int nu_segment;
 
 double vn_guess_min;
 

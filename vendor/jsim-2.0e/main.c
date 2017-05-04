@@ -50,8 +50,9 @@
 
 #include "jsim.h"
 #include "global.h"
+#include "extern.h"
 #include <sys/types.h>
-#include <sys/timeb.h>
+#include <sys/time.h>
 
 #if __STDC__
 static void run_jsim(void);

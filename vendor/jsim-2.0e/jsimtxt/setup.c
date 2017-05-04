@@ -347,7 +347,7 @@ read_deck()
   if (jsim_raw)
     strcpy(out_format,"\t%.15e\n");
   else
-    sprintf(out_format, "%c.%1de \0", '%', nu_digit);
+    sprintf(out_format, "%c.%1de %c", '%', nu_digit,'\0');
 
 
   for (i = 0; i <= file_count; i++) free(filename[i]);
@@ -835,7 +835,7 @@ print_dev_array(long *dev_array, long dev_count)
 
   for (i = 0; i < dev_count; i++)
     printf("dev %s %d\n", 
-           ((device *) *(dev_array + i))->name,
+           (char*)((device *) *(dev_array + i))->name,
            strlen((char*)((device *) *(dev_array + i))->name));
 
 }  /* print_dev_array */

@@ -1,6 +1,6 @@
 INCLUDE = ../include
 CFLAGS = -O -g -I${INCLUDE}
-CC = gcc
+CC = cc
 TARGET  = ../jsimtxt
 
 COBJS =     \

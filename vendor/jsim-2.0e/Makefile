@@ -1,7 +1,7 @@
 INCLUDE = include
 CFLAGS = -O -g -I${INCLUDE}
 LINKS = -lm
-CC = gcc
+CC = cc
 # for SYSV compilers that gag on ranlib (like SCO's), comment out next line
 LIBRARY = ranlib
 

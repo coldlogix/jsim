@@ -1,5 +1,6 @@
 /*************************************************************************
  *
+ *  JSIM Release 2.0e 11/7/14
  *  JSIM Release 2.0d 1/11/09
  *  JSIM Release 2.0c 1/4/04
  *  JSIM Release 2.0b 10/13/93
@@ -16,6 +17,11 @@
  *  Subsequent work: Jay Fleischman, Steve Whiteley
  *
  *************************************************************************/
+
+2.0e note:
+
+Another round of compiler warning fixes, now no warnings in clang-3.3.
+Added a pdf manual.
 
 2.0d note:
 The ftime call was replaced with gettimeofday, which is less obsolete

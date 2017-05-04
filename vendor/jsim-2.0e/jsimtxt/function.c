@@ -287,39 +287,47 @@ func_breakpoint(int ftype, char *fparm, double max_step, double ftime)
          {
            temp_val = 0.25*temp_pulse->tr;
            if (temp_val < max_step)
-           if (temp_time + temp_pulse->tr <= ftime)
-             add_breakpoint(temp_time, temp_time + temp_pulse->tr, 
+           {
+             if (temp_time + temp_pulse->tr <= ftime)
+               add_breakpoint(temp_time, temp_time + temp_pulse->tr, 
                             temp_val);
-           else 
-             add_breakpoint(temp_time, ftime, temp_val);
+             else 
+               add_breakpoint(temp_time, ftime, temp_val);
+           }
 
            temp_time = temp_time + temp_pulse->tr;
            temp_val = 0.25*temp_pulse->pw;
            if (temp_val < max_step)
-           if (temp_time + temp_pulse->pw <= ftime)
-             add_breakpoint(temp_time, temp_time + temp_pulse->pw, 
+           {
+             if (temp_time + temp_pulse->pw <= ftime)
+               add_breakpoint(temp_time, temp_time + temp_pulse->pw, 
                             temp_val);
-           else 
-             add_breakpoint(temp_time, ftime, temp_val);
+             else 
+               add_breakpoint(temp_time, ftime, temp_val);
+           }
 
            temp_time = temp_time + temp_pulse->pw;
            temp_val = 0.25*temp_pulse->tf;
            if (temp_val < max_step)
-           if (temp_time + temp_pulse->tf <= ftime)
-             add_breakpoint(temp_time, temp_time + temp_pulse->tf, 
+           {
+             if (temp_time + temp_pulse->tf <= ftime)
+               add_breakpoint(temp_time, temp_time + temp_pulse->tf, 
                             temp_val);
-           else 
-             add_breakpoint(temp_time, ftime, temp_val);
+             else 
+               add_breakpoint(temp_time, ftime, temp_val);
+           }
 
            temp_time = temp_time + temp_pulse->tf;
            temp_val = temp_pulse->per - temp_pulse->tr -
                             temp_pulse->pw - temp_pulse->tf;
            if (0.25*temp_val < max_step)
-           if (temp_time + temp_val <= ftime)
-             add_breakpoint(temp_time, temp_time + temp_val, 
+           {
+             if (temp_time + temp_val <= ftime)
+               add_breakpoint(temp_time, temp_time + temp_val, 
                             0.25*temp_val);
-           else 
-             add_breakpoint(temp_time, ftime, 0.25*temp_val);
+             else 
+               add_breakpoint(temp_time, ftime, 0.25*temp_val);
+           }
 
            index++;
 
@@ -339,13 +347,15 @@ func_breakpoint(int ftype, char *fparm, double max_step, double ftime)
            temp_val = 0.25*(temp_pwl->timedata[index2 + 2] - 
                             temp_pwl->timedata[index2]);
            if (temp_val < max_step)
-           if (temp_pwl->timedata[index2 + 2] <= ftime)
-             add_breakpoint(temp_pwl->timedata[index2], 
+           {
+             if (temp_pwl->timedata[index2 + 2] <= ftime)
+               add_breakpoint(temp_pwl->timedata[index2], 
                             temp_pwl->timedata[index2 + 2],
                             temp_val);
-           else
-             add_breakpoint(temp_pwl->timedata[index2], ftime,
+             else
+               add_breakpoint(temp_pwl->timedata[index2], ftime,
                             temp_val);
+           }
            index++;
 
          }  /* while */

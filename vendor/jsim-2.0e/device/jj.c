@@ -99,13 +99,15 @@ read_jj()
   intptr[0] = LATER;
 
   if (bad_dev == FALSE)
-  if (current_sub_def == NULL)
   {
-    name = add_realname(dev_name);
-    jj_to_devlist(name, JJ, nodeptr, intptr, dataptr, modptr);
+    if (current_sub_def == NULL)
+    {
+      name = add_realname(dev_name);
+      jj_to_devlist(name, JJ, nodeptr, intptr, dataptr, modptr);
+    }
+    else
+      jj_to_deftree(dev_name, JJ, nodeptr, intptr, dataptr, modptr);
   }
-  else
-    jj_to_deftree(dev_name, JJ, nodeptr, intptr, dataptr, modptr);
 
 }   /* read_jj */
 
@@ -477,19 +479,21 @@ jj_quasi(dev_jj *temp_jj, double val_quasi, int *which_piece,
   }
   
   if (val_quasi <= temp_mod->quasi_bkpoint[1])
-  if ( temp_jj->which_piece == SUB_GAP)
   {
-    *which_piece = SUB_GAP;
-    *gval_quasi = temp_jj->gg;
-    *sval_quasi = 0.0;
-    return;
-  }
-  else
-  {
-    *which_piece = TRANSITION;
-    *gval_quasi = temp_jj->glarge;
-    *sval_quasi = val_quasi*(temp_jj->gg - temp_jj->glarge);
-    return;
+    if ( temp_jj->which_piece == SUB_GAP)
+    {
+      *which_piece = SUB_GAP;
+      *gval_quasi = temp_jj->gg;
+      *sval_quasi = 0.0;
+      return;
+    }
+    else
+    {
+      *which_piece = TRANSITION;
+      *gval_quasi = temp_jj->glarge;
+      *sval_quasi = val_quasi*(temp_jj->gg - temp_jj->glarge);
+      return;
+    }
   }
 
   if (val_quasi <= temp_mod->quasi_bkpoint[2])
@@ -501,19 +505,21 @@ jj_quasi(dev_jj *temp_jj, double val_quasi, int *which_piece,
   }
 
   if (val_quasi <= temp_mod->quasi_bkpoint[3])
-  if (temp_jj->which_piece == NORMAL)
   {
-    *which_piece = NORMAL;
-    *gval_quasi = temp_jj->gn;
-    *sval_quasi = 0.0;
-    return;
-  }
-  else 
-  {
-    *which_piece = TRANSITION;
-    *gval_quasi = temp_jj->glarge;
-    *sval_quasi = val_quasi * (temp_jj->gn - temp_jj->glarge);
-    return;
+    if (temp_jj->which_piece == NORMAL)
+    {
+      *which_piece = NORMAL;
+      *gval_quasi = temp_jj->gn;
+      *sval_quasi = 0.0;
+      return;
+    }
+    else 
+    {
+      *which_piece = TRANSITION;
+      *gval_quasi = temp_jj->glarge;
+      *sval_quasi = val_quasi * (temp_jj->gn - temp_jj->glarge);
+      return;
+    }
   }
 
   *which_piece = NORMAL;
@@ -566,8 +572,11 @@ jj_fix_trap(int source_only, int *need_lu, double *hptr)
     else if (temp_moddata->rtype == JJ_PWL)
     {
       if (temp->which_piece == SUB_GAP) last_g = temp->gg;
-      else if (temp->which_piece == TRANSITION) last_g = temp->glarge; 
-      else last_g = temp->gn;
+      else
+      {
+        if (temp->which_piece == TRANSITION) last_g = temp->glarge;
+        else last_g = temp->gn;
+      }
     }
 
     two_c_hn = (cap_val + cap_val)/(*hptr); 

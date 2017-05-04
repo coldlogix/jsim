@@ -173,7 +173,7 @@ print_stat_LU(matrix A)
     "LU percent filled",
     100.0*element_count/((A.lu_stop + 1)*(A.lu_stop + 1)));
 
-  printf("%-19s%6d     %-19s%6ld\n","Non-zero elements",element_count,
+  printf("%-19s%6d     %-19s%6d\n","Non-zero elements",element_count,
     "Fill-ins",fillin_count);
 
 }    /* print_stat_LU */

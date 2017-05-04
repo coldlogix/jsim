@@ -382,7 +382,7 @@ extern device *add_dev(long,int,char*);
 extern long add_realname(char*);
 
 /* inductor.c */
-extern void rread_ind(void);
+extern void read_ind(void);
 extern device *ind_to_devlist(long,int,long*,long*,double*);
 extern device *ind_to_deftree(char*,int,long*,long*,double*);
 extern device *indsub_to_devlist(char*,int,char*);
