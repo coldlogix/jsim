@@ -1,0 +1,26 @@
+* Josephson transmission line
+b1 1 0 jj1
+b2 2 0 jj1
+b3 3 0 jj1
+b4 4 0 jj1
+b5 5 0 jj1
+b6 6 0 jj1
+b7 7 0 jj1
+b8 8 0 jj1
+b9 9 0 jj1
+b10 10 0 jj1
+l1 1 2 3.295p
+l2 2 3 3.295p
+l3 3 4 3.295p
+l4 4 5 3.295p
+l5 5 6 3.295p
+l6 6 7 3.295p
+l7 7 8 3.295p
+l8 8 9 3.295p
+l9 9 10 3.295p
+i1 0 1 pulse(0 .25m 0 20p 20p 1n 2n)
+.model jj1 jj(rtype=1 icrit=.1m r0=1 rn=1 cap=3.295p)
+.tran 1p 500p
+*.file out1
+.print nodev 1 0
+.print nodev 2 0
