@@ -1,0 +1,11 @@
+Benchmarks
+
+Obtained from 
+
+time dotest > testlog
+
+Machine                	Compiler      	O/S		Time
+Decstation 5000/33     	gcc 2.7.2     	Ultrix 4.2a	127
+Dell 486/66        	gcc 2.7.2	Linux 2.0	180
+
+Please mail me other exciting results

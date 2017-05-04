@@ -1,0 +1,157 @@
+
+/*************************************************************************
+ *
+ *  JSIM Release 2.0b 10/13/93
+ *  JSIM Release 2.0a 5/28/93
+ *  JSIM Release 2.0 10/24/92
+ *
+ *  JSIM is a simulator for circuits containing Josephson Junctions.
+ *
+ *  Author:         Emerson Fang, 1991
+ *                  University of California, Berkeley
+ *                  Dept. of Electrical Engineering and Computer Sciences
+ *                  Cryoelectronics Group, Professor Ted Van Duzer
+ *                  
+ *
+ *  Cleanup Crew:   Jay Fleischman    (jef@swordfish.berkeley.edu)
+ *                  Steve Whiteley    (stevew@landau.conductus.com)
+ *
+ *************************************************************************/
+
+2.0b note:
+Support for DJGCC port of gcc to DOS added.  Use the djgcc.mak makefile.
+A go32.exe must exist on the search path for execution.  This port is
+available on omnigate.clarkson.edu.
+
+2.0a notes:
+description of changes:
+
+1. Informational print statements were interfering when the output
+was sent to the ejgraph program.  These are now printed only in the
+rawfile (-r) mode.
+
+2. There was uncertainty in the time point count which was entered
+into the jsim.raw file (-r option only) relative to the actual number
+of time points output.  The two numbers now match.
+
+3. An input line of ".end" is now legal, and causes input reading to stop
+for the current simulation.  This was necessary for invocations of the
+form "jsim - - < catted_file", where in catted_file .end lines separate
+the jsim decks.
+
+
+2.0 notes:
+This release of JSIM has new features not found in earlier releases:
+
+1.  Output data can be placed in a "rawfile" in the same format used
+    by the Berkeley SPICE3 and NUTMEG programs.  Thus, these programs
+    can be used to display JSIM plots.  In addition, a stand-alone
+    program called GRAF is available for plotting rawfiles.
+
+2.  Input files, and options, can be listed on the command
+    line.  If no files are listed, the standard input is read, as with
+    previous JSIM versions.  Each file is run in sequence.
+
+3.  Previous releases of JSIM dumped a number of debugging files
+    into the current directory.  In this release, no debugging files
+    are created, unless requested with a command line option.  In this
+    case, only one file is created, which contains all of the information.
+
+In addition, files have been combined and the source tree altered to
+facilitate program maintenance.  The files have been rewritten to be
+ansi compatible, with function prototypes in the extern.h file.
+
+
+Command line syntax:
+
+
+jsim [-options] [filenames] [-options] [filenames] ... [ redirection ]
+
+
+
+  Recognized options are d, r, or nothing, following a '-'.
+    d    toggle debugging, which dumps a file jsim.dbg (initially off).
+
+    r    toggle use of a rawfile jsim.raw for output (initially off).
+    -    read the standard input.
+  
+  The d,r options can be combined.  The filenames jsim.dbg and jsim.raw
+  are hard coded.
+    
+  Other tokens on the command line are assumed to be file names
+  to read for input.  If no such tokens are found, the standard input
+  is read.
+
+  The options operate on files listed to the right of the option
+  list, and are active until changed with another invocation.  If
+  no files are listed, the options are read before the standard
+  input is read.
+
+  When multiple files are simulated, enabled output to the jsim.dbg
+  and jsim.raw files is appended.  The first file to generate such
+  output creates the file.  If the file previously existed, it will
+  be clobbered!  If the rawfile option is not specified, files will
+  be created in accordance with the .file lines in the input files.
+  These file names should be unique, as new files are opened for
+  each simulation.  The .file lines are ignored if the rawfile option
+  is used.
+
+
+examples:
+
+  jsim file1 -d file2 -d file3
+    will dump debug information while simulating file2.
+   
+  jsim file1 -rd - file3 <anotherfile
+    will simulate file1, turn on debugging and rawfile creation,
+    then simulate anotherfile, then file3.
+
+  jsim -r <inputfile
+    will simulate inputfile and create a rawfile.
+
+  jsim -r inputfile
+    same as above
+
+  jsim - - - <input
+    will run three concatenated input decks read from input.
+
+
+
+Building JSIM
+
+If you have a UNIX system with BSD compatibility, simply type
+
+  make -f unix.mak
+
+while in the directory containing this file.  The executable will be
+generated in this directory.  This can be moved to another location
+without restriction.
+
+If you have SYSV UNIX, then you probably do not need to run the
+ranlib program, which is initiated from the makefiles.  On some systems,
+such as HP, a warning message is generated, but no error.  On others,
+such as SCO UNIX, an error is generated and the make terminates.  To
+avoid this, edit unix.mak in this directory, changing the line
+
+  LIBRARY = ranlib
+
+to
+
+  LIBRARY = library
+
+
+For DOS, there are two makefiles, both of which are designed for
+the Borland make program.  The real mode dosreal.mak is designed
+to work with the Borland C++ compiler, which produces 16-bit (slow)
+code.  The protected mode dosprot.mak is designed for the Microway
+C compiler and the Phar Lap DOS extender toolset.  See the comments
+in these files for more information.  The code in the jsim source is
+generic enough that it should compile under any decent C compiler.  
+
+
+Bugs and problems should be reported to (and help might possibly be
+available from)
+
+Steve Whiteley    (stevew@landau.conductus.com)  (408) 737-6770
+Jay Fleischman    (jef@swordfish.berkeley.edu)   (510) 642-0502
+

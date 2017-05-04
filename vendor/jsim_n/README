@@ -1,0 +1,64 @@
+/*********************************************************************
+* jsim_n 3/8/95	                                                     *
+* stochastic extension of jsim.                                      *
+*                                                                    *
+* Modifications by J. Satchell (satchell@dra.hmg.gb)                 *
+* Files that have been altered have "_n" at the end of the first     *
+* component of their names. The modifications, the makefile, this    *
+* README, the documentation file noise.ms, the awk script noise.awkf *
+* and the contents of the tests  directory are all covered by the    *
+* following copyright                                                *
+*                                                                    *
+*  (c) British Crown copyright January 1997/DERA.                    *
+*  Permission to use, copy, modify, and distribute this software     * 
+*  and documentation for any purpose without fee is hereby granted,  *
+*  provided that the above copyright notice appears in all copies    *
+*  The copyright holders make no representations about the           *
+*  suitability of this software for any purpose. It is provided      *
+*  "as is" without express or implied warranty. No liability is      *
+*  accepted by the copyright holder for any use made of this         *
+*  software                                                          *
+*                                                                    *
+* See below for revised make instructions                            *
+*                                                                    *
+**********************************************************************/ 
+/** _n **/
+See the original README file, which I have renamed README.old.
+I don't think I have anything to add to it, except I have removed the dos 
+make files as they would need modifications that I am not competent to make.
+
+I have made a dumb makefile, which does not need the subsidiary ones in
+the subdirectories. It also doesn't bother with ar or ranlib.
+
+So now to implement, just edit makefile, (e.g change cc to gcc).
+If you are on a machine which does not support random() in its c library,
+set -DNORANDOM, and the horrible function rand() will be used. This is
+a low quality random number generator, with a spectrum which is 
+coloured, but is supported on almost all machines. Alternatively
+see if your system supports srand48/drand48, and edit the source code
+to use those instead.
+
+To improve the interactive feel of my graphics I have added
+extra flushing statements, which will incur a small IO
+overhead. If this bothers you, comment out the calls to fflush
+in file jsimtxt/tran_n.c
+
+An awk script has been provided which adds noise to circuit,
+by including noise current source across every resistor.
+To use it on a file circuit.js you could try
+
+awk -f noise.awkf temperature=77.36 < circuit.js | jsim_n
+
+As far as I know any of awk, nawk and gawk are OK. If you are 
+using DOS/Windoze, you are stuck, unless there is a DOS awk 
+implementation available somewhere on the net. The script is simple
+enough that it could be emulated by some other programme if need be.
+ 
+Resistors whose names start with Z are left alone, so you can 
+add noise free bias networks, output filters and the like.
+
+There are some tests in the tests subdirectory.
+
+
+Julian Satchell (satchell@dra.hmg.gb)        (+44) 1684 895003
+
