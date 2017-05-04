@@ -201,6 +201,7 @@ int subtype;
     print_tail->next_print = temp_print;
     print_tail = temp_print;
   }
+
 }   /* add_pr_device */
 
 
@@ -276,4 +277,57 @@ do_print()
 
 }  /* do_print */
 
+/* Print line of all variable names as column header. */
+void print_header(FILE *fp) {
+	printdata *temp_print;
+	int printed = 0;
+	char* type_name;
 
+	temp_print = print_list;
+
+	if (temp_print != NULL) {
+		printed = 1;
+		fprintf(fp, "time ");
+	}
+
+	while (temp_print != NULL) {
+
+
+		if (temp_print->is_dev) {
+			switch(temp_print->prtype) {
+			case VOLT:
+				type_name = "V"; break;
+			case AMP:
+				type_name = "I"; break;
+			case PHI:
+				type_name = "P"; break;
+			case VOLT_TIME:
+				type_name = "VT"; break;
+			case AMP_TIME:
+				type_name = "IT"; break;
+			default:
+				type_name = "U"; break;
+			}
+			fprintf(fp, "%s_%s", temp_print->dev_name, type_name);
+		} else {
+
+			if (temp_print->minus == ground_node) {
+				fprintf(fp, "NV%d", temp_print->plus);
+			} else if (temp_print->plus == ground_node) {
+				fprintf(fp, "NV%d_%d", 0, temp_print->minus);
+			} else {
+				fprintf(fp, "NV%d_%d", temp_print->plus, temp_print->minus);
+			}
+
+		}
+		temp_print = temp_print->next_print;
+		if (temp_print != NULL) {
+			fprintf(fp, " ");
+		}
+	}
+
+	if (printed) {
+		fprintf(fp, "\n");
+	}
+
+}  /* print_header */

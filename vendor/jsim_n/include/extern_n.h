@@ -148,6 +148,7 @@ extern int warned;
 extern int igwarn_no_go;
 extern int jsim_dbg;
 extern int jsim_raw;
+extern int jsim_mout;
 
 
 extern int read_error;
@@ -160,6 +161,8 @@ extern double dataptr[];
 extern long nodeptr[];
 extern long intptr[];
 extern char *filename[];
+
+extern FILE *mfile;
 
 extern double hptr[];
 
@@ -263,6 +266,7 @@ extern void read_print(void);
 extern void add_pr_node(FILE*,int,int);
 extern void add_pr_device(FILE*,char*,int,int);
 extern void do_print(void);
+extern void print_header(FILE*);
 
 /* setup.c */
 extern void init_global(void);

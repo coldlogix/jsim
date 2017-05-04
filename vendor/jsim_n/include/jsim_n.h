@@ -753,7 +753,7 @@ typedef struct fchecktype {
 
 #define DEF_MAX_FLUX_STEP  0.5e-15
 
-#define DEF_NU_DIGIT       3
+#define DEF_NU_DIGIT       15
 
 #define DEF_VN_GUESS_MIN   0.5e-3
 #define VN_GUESS_REF       2.0e-3

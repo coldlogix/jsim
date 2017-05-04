@@ -64,7 +64,7 @@ static void do_opts();
 FILE *fp;
 
 
-void
+int
 main(argc,argv)
 
 int argc;
@@ -88,6 +88,7 @@ char **argv;
 #endif
   jsim_dbg = FALSE;
   jsim_raw = FALSE;
+  jsim_mout = FALSE;
 
   for (i = 1; i < argc; i++) {
     if (*argv[i] == '-') {
@@ -99,7 +100,15 @@ char **argv;
         tried = TRUE;
       }
       else
-        do_opts(argv[i]+1);
+        if (*(argv[i]+1) == 'm') {
+          jsim_mout ^= 1;
+          jsim_raw = FALSE;
+          mfilename = argv[i+1];  /* argv should not vanish during program execution */
+          printf("Filename for exported variables: %s\n", mfilename);
+          i++;
+        } else {
+          do_opts(argv[i]+1);
+        }
     }
     else {
       fp = fopen(argv[i],"r");
@@ -131,13 +140,24 @@ run_jsim()
   struct timeb now;
   long t;
 
-
   init_global();
   read_deck();
   process_deck();
   deckerror_check();
   topology_check();
   free_space();
+
+  if (jsim_mout) {
+    mfile = fopen(mfilename, "w");
+    if (!mfile) {
+      printf("## Error -- cannot open output file: %s\n", mfilename);
+      no_go = TRUE;
+    } else {
+      print_header(mfile);
+    }
+  } else {
+    print_header(stdout);
+  }
 
   if (stop_time < 0.0)
   {
@@ -192,7 +212,7 @@ char *s;
   }
   for (c = s; *c; c++) {
     if (*c == 'r') {
-      jsim_raw ^= 1;
+      if (!jsim_mout) jsim_raw ^= 1;
       break;
     }
   }

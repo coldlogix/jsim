@@ -38,7 +38,8 @@ mycalloc(num, size)
 
 int num, size;
 {
-  char *temp, *calloc();
+//  char *temp, *calloc();
+  char *temp;
 
   temp = calloc(num, size);
   if (temp == NULL) sperror(NO_MEM); 
@@ -64,12 +65,16 @@ char *line;
   do
   {
     c = getc(fp);
-    if ((c != '\n') && (c != EOF))
+    if ((c != '\r') && (c != '\n') && (c != EOF))
     {
       if ((c >= 'a') && (c <= 'z')) c = 'A' + c - 'a';
       *(line + i) = c;
       printf("%c", c);
       i++;
+    }
+    else if (c == '\r')
+    {
+      /* Do nothing. */
     }
     else if (c == '\n')
     {

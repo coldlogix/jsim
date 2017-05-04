@@ -220,7 +220,7 @@ void gauss_ran(double *r1, double *r2)
  double twopi = 6.28318530718;
  double u1,u2,lt;
 #ifdef NORANDOM
- u1 = (double)rand() / RAND_MAX;
+ u1 = (double)(rand()+1) / (RAND_MAX+1);
  u2 = (double)rand() * twopi / RAND_MAX;
 #else
  double scale = 1.0/1024.0/1024.0/1024.0/2.0;

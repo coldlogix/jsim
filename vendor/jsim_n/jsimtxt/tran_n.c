@@ -1127,11 +1127,15 @@ double inc_rate;
     raw_cntr++;
   }
   else {
-    for (i = 0; i <= file_count; i++)
+    if (jsim_mout && mfile) {
+      fprintf(mfile, out_format, the_time);
+    } else {
+      for (i = 0; i <= file_count; i++)
         fprintf(fileptr[i], out_format, the_time);
-
-    if (fileptr[MAXFILE] != NULL)
+      if (fileptr[MAXFILE] != NULL)
         fprintf(stdout, out_format, the_time);
+    }
+
   }
 
   while (temp != NULL) {
@@ -1145,28 +1149,43 @@ double inc_rate;
 
       plus_val = get_pr_val(inc_rate, temp->plus, 0);
       minus_val = get_pr_val(inc_rate, temp->minus, 0);
-      fprintf(fptmp, out_format, plus_val - minus_val);
+      if (jsim_mout && mfile) {
+        fprintf(mfile, out_format, plus_val - minus_val);
+      } else {
+        fprintf(fptmp, out_format, plus_val - minus_val);
+      }
     }
     else {
       /* is_dev is TRUE */ 
 
       switch(temp->print_dev->type) {
         case RESIS :
- 
-             resis_tran_print(fptmp, inc_rate, temp->prtype, 
-                              temp->print_dev);
+             if (jsim_mout && mfile) {
+               resis_tran_print(mfile, inc_rate, temp->prtype, temp->print_dev);
+             } else {
+               resis_tran_print(fptmp, inc_rate, temp->prtype,
+                                             temp->print_dev);
+             }
              break;
 
         case CAP :
- 
-             cap_tran_print(fptmp, inc_rate, temp->prtype, 
-                            temp->print_dev);
+             if (jsim_mout && mfile) {
+               cap_tran_print(mfile, inc_rate, temp->prtype, temp->print_dev);
+             } else {
+               cap_tran_print(fptmp, inc_rate, temp->prtype,
+                                           temp->print_dev);
+             }
              break;
 
         case INDUCT :
  
-             ind_tran_print(fptmp, inc_rate, temp->prtype, 
-                            temp->print_dev);
+
+             if (jsim_mout && mfile) {
+               ind_tran_print(mfile, inc_rate, temp->prtype, temp->print_dev);
+             } else {
+               ind_tran_print(fptmp, inc_rate, temp->prtype,
+                                          temp->print_dev);
+             }
              break;
 
         case DC_V :
@@ -1176,8 +1195,13 @@ double inc_rate;
         case NOISE_V :
         case V_SOURCE :
  
-             vs_tran_print(fptmp, inc_rate, temp->prtype, 
-                            temp->print_dev);
+
+             if (jsim_mout && mfile) {
+               vs_tran_print(mfile, inc_rate, temp->prtype, temp->print_dev);
+             } else {
+               vs_tran_print(fptmp, inc_rate, temp->prtype,
+                                           temp->print_dev);
+             }
              break;
 
         case SIN_I :
@@ -1186,20 +1210,35 @@ double inc_rate;
         case NOISE_I :
         case I_SOURCE :
  
-             is_tran_print(fptmp, inc_rate, temp->prtype, 
-                            temp->print_dev, the_time);
+
+             if (jsim_mout && mfile) {
+               is_tran_print(mfile, inc_rate, temp->prtype, temp->print_dev, the_time);
+             } else {
+               is_tran_print(fptmp, inc_rate, temp->prtype,
+                                           temp->print_dev, the_time);
+             }
              break;
 
         case JJ :
  
-             jj_tran_print(fptmp, inc_rate, temp->prtype, 
-                            temp->subtype, temp->print_dev);
+
+             if (jsim_mout && mfile) {
+               jj_tran_print(mfile, inc_rate, temp->prtype, temp->subtype, temp->print_dev);
+             } else {
+               jj_tran_print(fptmp, inc_rate, temp->prtype,
+                                           temp->subtype, temp->print_dev);
+             }
              break;
 
         case TRAN_NO_LOSS :
  
-             xline_tran_print(fptmp, inc_rate, temp->prtype, 
-                            temp->subtype, temp->print_dev);
+
+             if (jsim_mout && mfile) {
+               xline_tran_print(mfile, inc_rate, temp->prtype, temp->subtype, temp->print_dev);
+             } else {
+               xline_tran_print(fptmp, inc_rate, temp->prtype,
+                                           temp->subtype, temp->print_dev);
+             }
              break;
 
       }  /* switch */
@@ -1209,11 +1248,15 @@ double inc_rate;
 
   }   /* while */
 
-  if (jsim_raw == FALSE) {
-    for (i = 0; i <= file_count; i++)
-      {fprintf(fileptr[i], "\n");fflush(fileptr[i]);}
+  if (jsim_mout && mfile) {
+    fprintf(mfile, "\n");
+  } else {
+    if (jsim_raw == FALSE) {
+      for (i = 0; i <= file_count; i++)
+        {fprintf(fileptr[i], "\n");fflush(fileptr[i]);}
 
-    if (fileptr[MAXFILE] != NULL) {fprintf(stdout, "\n");fflush(stdout);}
+      if (fileptr[MAXFILE] != NULL) {fprintf(stdout, "\n");fflush(stdout);}
+    }
   }
 
 }   /* print_tran */

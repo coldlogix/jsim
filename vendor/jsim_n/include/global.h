@@ -136,17 +136,21 @@ int warned;
 int igwarn_no_go;
 int jsim_dbg;
 int jsim_raw;
+int jsim_mout;
 
 int read_error;
 char *dev_name;
-char linesave[500];
+char linesave[50000];
 char *line;
 char namestring[200];
-char tempstring[200];
-double dataptr[100];
+char tempstring[50000];
+double dataptr[20000];
 long nodeptr[100];
 long intptr[100];
 char *filename[MAXFILE];
+
+char *mfilename;
+FILE *mfile;
 
 double hptr[STEPSAVE+1];
 

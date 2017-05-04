@@ -12,7 +12,7 @@
 #  holder for any use made of this software                          *
 #*********************************************************************/
 #
-SHELL = /bin/csh
+SHELL = /bin/bash
 INCLUDE = include
 # Change this if you nwant some other compiler
 CC = gcc
@@ -39,7 +39,7 @@ JSTSRC = jsimtxt/debug.c jsimtxt/function_n.c jsimtxt/matrix.c \
 LINKS = -lm
 
 jsim_n: main_n.o $(JSTOBJ) $(DEVOBJ)
-	$(CC) -O -o jsim_n main_n.o $(JSTOBJ) $(DEVOBJ) $(LINKS)
+	$(CC) -O -o ./bin/jsim_n main_n.o $(JSTOBJ) $(DEVOBJ) $(LINKS)
 
 clean:
 	rm -f *.o *.a jsimtxt/*.o device/*.o
@@ -47,9 +47,11 @@ clean:
 .c.o: $*.c
 	$(CC) $(CFLAGS) -c -o $@  $<
 
-
 doc: 
 	nroff -ms manual.ms
 	nroff -ms noise.ms
 	
 main_n.o:  include/global.h include/jsim_n.h
+
+install:
+	cp ./bin/jsim_n ~/site/bin/jsim_n

@@ -65,7 +65,7 @@ char *name;
 int type;
 {
   modeldata *temp_model;
-  char *calloc();
+//  char *calloc();
 
   temp_model = (modeldata *) calloc(1, sizeof(modeldata));
   mod_count++;
