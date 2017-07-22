@@ -147,11 +147,12 @@ read_sub_ckt()
      intptr[0]++;
 
   if (bad_dev == FALSE)
-  if (current_sub_def == NULL)
-    subckt_to_devlist((long) dev_name, SUB_C, nodeptr, intptr, modptr);
-  else
-    subckt_to_deftree(dev_name, SUB_C, nodeptr, intptr, modptr);
-
+  {
+    if (current_sub_def == NULL)
+      subckt_to_devlist((long) dev_name, SUB_C, nodeptr, intptr, modptr);
+    else
+      subckt_to_deftree(dev_name, SUB_C, nodeptr, intptr, modptr);
+  }
 }  /* read_sub_ckt */
 
 

@@ -243,17 +243,19 @@ cutset_check()
       }
 
       if (others == FALSE)
-      if (capacitor == FALSE) 
       {
-        printf("## Error -- node %1d has only current", temp->node);
-        printf(" source(s) attached\n"); 
-        no_go = TRUE;
-      }
-      else
-      {
-        printf("## Warning -- node %1d has only cap(s)", temp->node);
-        printf(" and/or current source(s) attached\n");             
-        warned = TRUE;
+        if (capacitor == FALSE)
+        {
+          printf("## Error -- node %1d has only current", temp->node);
+          printf(" source(s) attached\n");
+          no_go = TRUE;
+        }
+        else
+        {
+          printf("## Warning -- node %1d has only cap(s)", temp->node);
+          printf(" and/or current source(s) attached\n");
+          warned = TRUE;
+        }
       }
 
       temp = temp->next_node;

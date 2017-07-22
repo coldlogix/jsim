@@ -135,13 +135,15 @@ read_transline()
   intptr[0] = LATER;
 
   if (bad_dev == FALSE)
-  if (current_sub_def == NULL)
   {
-    name = add_realname(dev_name);
-    xline_to_devlist(name, type, nodeptr, dataptr);
+    if (current_sub_def == NULL)
+    {
+      name = add_realname(dev_name);
+      xline_to_devlist(name, type, nodeptr, dataptr);
+    }
+    else
+      xline_to_deftree(dev_name, type, nodeptr, dataptr);
   }
-  else
-    xline_to_deftree(dev_name, type, nodeptr, dataptr);
 
 }   /* read_transline */
 

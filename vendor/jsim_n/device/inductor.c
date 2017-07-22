@@ -61,14 +61,15 @@ read_ind()
   }
 
   if (bad_dev == FALSE)
-  if (current_sub_def == NULL)
   {
-    name = add_realname(dev_name);
-    ind_to_devlist(name, INDUCT, nodeptr, intptr, dataptr);
+    if (current_sub_def == NULL)
+    {
+      name = add_realname(dev_name);
+      ind_to_devlist(name, INDUCT, nodeptr, intptr, dataptr);
+    }
+    else
+     ind_to_deftree(dev_name, INDUCT, nodeptr, intptr, dataptr);
   }
-  else 
-   ind_to_deftree(dev_name, INDUCT, nodeptr, intptr, dataptr);
-
 }   /* read_ind */
 
 
@@ -100,22 +101,24 @@ double *dataptr;
                             n_minus, branch, intptr[0], dataptr[2]);
 
          if (*intptr == TRUE)
-         if (fcheck_list == NULL)
          {
-           temp_fcheck = (flux_check_list *) 
-                          mycalloc(1, sizeof(flux_check_list)); 
-           temp_fcheck->flux_check = temp_dev;
-           temp_fcheck->next_flux_check = NULL;
-           fcheck_list = fcheck_tail = temp_fcheck;
-         }
-         else
-         {
-           temp_fcheck = (flux_check_list *) 
-                          mycalloc(1, sizeof(flux_check_list)); 
-           temp_fcheck->flux_check = temp_dev;
-           temp_fcheck->next_flux_check = NULL;
-           fcheck_tail->next_flux_check = temp_fcheck;
-           fcheck_tail = temp_fcheck;
+           if (fcheck_list == NULL)
+           {
+             temp_fcheck = (flux_check_list *)
+                            mycalloc(1, sizeof(flux_check_list));
+             temp_fcheck->flux_check = temp_dev;
+             temp_fcheck->next_flux_check = NULL;
+             fcheck_list = fcheck_tail = temp_fcheck;
+           }
+           else
+           {
+             temp_fcheck = (flux_check_list *)
+                            mycalloc(1, sizeof(flux_check_list));
+             temp_fcheck->flux_check = temp_dev;
+             temp_fcheck->next_flux_check = NULL;
+             fcheck_tail->next_flux_check = temp_fcheck;
+             fcheck_tail = temp_fcheck;
+           }
          }
 
          return(temp_dev);

@@ -101,16 +101,17 @@ read_jj()
   intptr[0] = LATER;
 
   if (bad_dev == FALSE)
+  {
   if (current_sub_def == NULL)
-  {
-    name = add_realname(dev_name);
-    jj_to_devlist(name, JJ, nodeptr, intptr, dataptr, modptr);
+    {
+      name = add_realname(dev_name);
+      jj_to_devlist(name, JJ, nodeptr, intptr, dataptr, modptr);
+    }
+    else
+    {
+      jj_to_deftree(dev_name, JJ, nodeptr, intptr, dataptr, modptr);
+    }
   }
-  else
-  {
-    jj_to_deftree(dev_name, JJ, nodeptr, intptr, dataptr, modptr);
-  }
-
 }   /* read_jj */
 
 
@@ -512,19 +513,21 @@ double *sval_quasi;
   }
   
   if (val_quasi <= temp_mod->quasi_bkpoint[1])
-  if ( temp_jj->which_piece == SUB_GAP)
   {
-    *which_piece = SUB_GAP;
-    *gval_quasi = temp_jj->gg;
-    *sval_quasi = 0.0;
-    return;
-  }
-  else
-  {
-    *which_piece = TRANSITION;
-    *gval_quasi = temp_jj->glarge;
-    *sval_quasi = val_quasi*(temp_jj->gg - temp_jj->glarge);
-    return;
+    if ( temp_jj->which_piece == SUB_GAP)
+    {
+      *which_piece = SUB_GAP;
+      *gval_quasi = temp_jj->gg;
+      *sval_quasi = 0.0;
+      return;
+    }
+    else
+    {
+      *which_piece = TRANSITION;
+      *gval_quasi = temp_jj->glarge;
+      *sval_quasi = val_quasi*(temp_jj->gg - temp_jj->glarge);
+      return;
+    }
   }
 
   if (val_quasi <= temp_mod->quasi_bkpoint[2])
@@ -536,19 +539,21 @@ double *sval_quasi;
   }
 
   if (val_quasi <= temp_mod->quasi_bkpoint[3])
-  if (temp_jj->which_piece == NORMAL)
   {
-    *which_piece = NORMAL;
-    *gval_quasi = temp_jj->gn;
-    *sval_quasi = 0.0;
-    return;
-  }
-  else 
-  {
-    *which_piece = TRANSITION;
-    *gval_quasi = temp_jj->glarge;
-    *sval_quasi = val_quasi * (temp_jj->gn - temp_jj->glarge);
-    return;
+    if (temp_jj->which_piece == NORMAL)
+    {
+      *which_piece = NORMAL;
+      *gval_quasi = temp_jj->gn;
+      *sval_quasi = 0.0;
+      return;
+    }
+    else
+    {
+      *which_piece = TRANSITION;
+      *gval_quasi = temp_jj->glarge;
+      *sval_quasi = val_quasi * (temp_jj->gn - temp_jj->glarge);
+      return;
+    }
   }
 
   *which_piece = NORMAL;
