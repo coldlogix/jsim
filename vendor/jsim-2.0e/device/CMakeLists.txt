@@ -2,9 +2,8 @@ cmake_minimum_required(VERSION 2.8)
 
 project(jsimdevice C)
 
-set (DEVSRC
+set (COMMONDEVSRC
 	cap.c 
-	device.c 
 	inductor.c 
 	isource.c 
 	jj.c 
@@ -15,10 +14,21 @@ set (DEVSRC
 )
 
 add_library(jsimdevice
-    ${DEVSRC}
+    ${COMMONDEVSRC}
+    device.c 
+)
+
+add_library(jsim_ndevice
+    ${COMMONDEVSRC}
+    device_n.c 
 )
 
 target_include_directories(jsimdevice
+  PUBLIC
+    ../include
+)
+
+target_include_directories(jsim_ndevice
   PUBLIC
     ../include
 )

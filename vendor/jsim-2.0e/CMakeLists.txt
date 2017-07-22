@@ -19,6 +19,22 @@ target_link_libraries(jsim
     jsimdevice
     jsimtxt
 )
+
+
+add_executable(jsim_n
+    main_n.c
+)
+
+target_include_directories(jsim_n
+  PUBLIC
+    include
+)
+
+target_link_libraries(jsim_n
+  PUBLIC
+    jsim_ndevice
+    jsim_ntxt
+)
 #doc: 
 #	nroff -ms manual.ms
 #	nroff -ms noise.ms

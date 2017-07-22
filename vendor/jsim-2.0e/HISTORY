@@ -1,0 +1,21 @@
+Jsim has a long history with many contributors making various changes
+for various purposes.  This file is an attempt to document this particular
+release in a way that can be easily extended by others.  Please add to this
+history file if you make modifications
+
+The version started as jsim_2.0e from Steve Whiteley, as downloaded from
+the Whiteley Research website
+    May 3, 2017
+    
+    http://www.wrcad.com/ftp/pub/jsim-2.0e.tar.gz
+    
+    File information:
+    	jsim-2.0e.tar.gz	08-Nov-2014 17:23	125K
+
+2017-07-22  Jonathan Stark <stark@coldlogix.com>
+ 
+   CMake file was added
+
+   Merged the stochastic extension of jsim for jsim_n by J. Satchell (satchell@dra.hmg.gb)
+
+
