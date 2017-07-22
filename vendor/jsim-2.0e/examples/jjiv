@@ -1,0 +1,16 @@
+* IV curve
+*
+b1 1 0 jj1
+v1 2 0 pwl(0 0 20n 70m 40n 0 50n 0)
+r1 2 1 100
+*
+*
+*Nb 1000 A/cm2   area = 30 square microns
+.model jj1 jj(rtype=4,cct=1,icon=10m,vg=2.8m,delv=.1m,
++ icrit=0.3m,r0=10,rn=5.4902,cap=1.14195p)
+.tran 5p 50n
+.file out1
+.print nodev 1 0
+.print devi v1 
+.options reltol=.001 maxphistep=.3
+.end
