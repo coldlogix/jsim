@@ -257,6 +257,10 @@ init_node_map()
 
 extern FILE *fp;
 
+/* forward decleration */
+
+void read_ind();
+
 
 void
 read_deck()
@@ -366,7 +370,7 @@ read_deck()
   if (jsim_raw)
     strcpy(out_format,"\t%.15e\n");
   else
-    sprintf(out_format, "%c.%1de \0", '%', nu_digit);
+    sprintf(out_format, "%c.%1de ", '%', nu_digit);
 
 
   for (i = 0; i <= file_count; i++) free(filename[i]);

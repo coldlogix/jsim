@@ -17,7 +17,7 @@
 
 #include "jsim_n.h"
 #include "extern_n.h"
-
+#include <strings.h>
 
 void
 read_transline()
@@ -312,7 +312,7 @@ int type;
 double *dataptr;
 long n1_plus, n1_minus, n2_plus, n2_minus;
 {
-  char *data;
+  char *data=0;
   dev_tran_noloss *temp;
   sub_tran_noloss *temp_sub;
    

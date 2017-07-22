@@ -133,6 +133,22 @@ char **argv;
 
 } /* main */
 
+/* Forward declarations (perhaps move to .h file one day?) */
+void init_global();
+void read_deck();
+void process_deck();
+void deckerror_check();
+void topology_check();
+void free_space();
+void print_header(FILE *fp);
+
+void setup_device();
+void setup_matrix();
+void get_breakpoint();
+
+void time_loop(double *hptr);
+
+void print_stat_LU(matrix A);
 
 static void
 run_jsim()

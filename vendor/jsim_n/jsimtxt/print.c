@@ -134,7 +134,7 @@ read_print()
     case PHASE :
          read_error = read_string("device name");
          dev_name = new_string(tempstring);
-         add_pr_device(current_fp, dev_name, PHI, whichpart);
+         add_pr_device(current_fp, dev_name, PHI, 0);
          break;
 
     default:
