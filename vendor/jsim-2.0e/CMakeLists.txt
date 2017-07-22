@@ -1,0 +1,25 @@
+cmake_minimum_required(VERSION 2.8)
+
+project(jsim C)
+
+add_subdirectory(device)
+add_subdirectory(jsimtxt)
+
+add_executable(jsim
+    main.c
+)
+
+target_include_directories(jsim
+  PUBLIC
+    include
+)
+
+target_link_libraries(jsim
+  PUBLIC
+    jsimdevice
+    jsimtxt
+)
+#doc: 
+#	nroff -ms manual.ms
+#	nroff -ms noise.ms
+
