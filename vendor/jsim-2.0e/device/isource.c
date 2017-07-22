@@ -98,7 +98,7 @@ is_to_deftree(char *dev_name, sub_isource *temp_subi)
 device *
 issub_to_devlist(char *dev_name, char *data)
 {
-  int n_plus, n_minus, branch; 
+  int n_plus, n_minus; 
   long name;
   branch_marker *bmarker;
   dev_isource *temp_is;
@@ -145,11 +145,8 @@ add_isource(long name, char *data)
 void
 is_matrix()
 {
-  m_data *temp_m;
   device *temp_dev;
   dev_isource *temp_is;
-  int i, exist;
-  double val;
 
   temp_dev = isource;
 

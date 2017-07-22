@@ -18,6 +18,7 @@
 #include "jsim.h"
 #include "extern.h"
 
+#include <stdlib.h>
 
 m_data *
 find_i_j(matrix *A, int i, int j)
@@ -39,7 +40,6 @@ m_data *
 add_i_j(matrix *A, int i, int j, int *exist)
 {
    m_data *d_ptr, *temp1;
-   int tempint;
 
    temp1 = A->rowptr[i];
    
@@ -370,7 +370,6 @@ ex_col(matrix *A, int ca, int cb, int need_diag)
   m_data *c1_c1, *c1_pre, *c2_c2, *c2_pre;
   m_data *temp;
   int c1, c2, temp_int;
-  long temp_long;
   
   if (ca == cb) return;
   else if (ca < cb) 
@@ -554,8 +553,6 @@ add_source(source *b, int i)
 x_data *
 add_unknown(unknown *x, int i)
 {
-  int tempint;
-
   if (x[i] != NULL) return(x[i]);
 
   x[i] = (x_data *) mycalloc(1, sizeof(x_data));
@@ -597,7 +594,6 @@ A_LU(matrix *A, int pivot_type, int allow_fillin)
   int d_pivot_failed;
   double temp_val;
   pivot_row_data  *pivot_row;
-  int tempint;
 
   d_pivot_failed = 0;
   pivot_row = (pivot_row_data *) 

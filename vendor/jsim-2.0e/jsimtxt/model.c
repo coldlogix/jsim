@@ -18,6 +18,7 @@
 #include "jsim.h"
 #include "extern.h"
 
+#include <stdlib.h>
 
 void
 read_model()

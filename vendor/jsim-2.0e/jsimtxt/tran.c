@@ -106,9 +106,7 @@ step_control(double current_step, double *new_step, double *hptr)
   double smallest;
   double h;
   double xnd, xn1d, xn2d, xnddd;
-  int status;
   int i;
-  int tempc;
 
   if (current_step <= 0.0) 
   {
@@ -390,7 +388,6 @@ int
 nonlinear_loop(int source_only, double *hptr)
 {
   int converged, nonlinear_count;
-  int temp;
   int need_lu;
 
   nonlinear_count = 0;
@@ -489,11 +486,7 @@ int
 converge()
 {
   long i;
-  int converged;
   double delta, xn, xguess;
-  device *temp_dev;
-  dev_jj *temp_jj;
-  double temp_vn;
 
 /* SRW ** Note:  Only junction phase is convergence tested, unlike
  * jspice3 which also checks junction voltage.  Setting the following
@@ -873,7 +866,6 @@ find_dx(double *hptr)
 void
 find_phi(double *hptr)
 {
-  int i;
   device *temp_dev;
   dev_jj *temp_jj;
   double xn, xn1, yn, yn1;
@@ -967,7 +959,6 @@ iteration_update()
 int
 matrix_iteration_update(int source_only, double *hptr)
 {
-  int temp;
   int need_lu;
   
   jj_fix_trap(source_only, &need_lu, hptr);

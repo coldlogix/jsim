@@ -18,6 +18,9 @@
 #include "jsim.h"
 #include "extern.h"
 
+#include <stdlib.h>
+#include <string.h>
+
 long *temp_array;
 
 
@@ -238,7 +241,6 @@ get_dev_array(int no_sort, device *dev_list, long dev_count)
 {
   long i, *temp_dev_array;
   device *temp_dev;
-  int tempint;
   
   if (dev_count <= 0) return(NULL);
 
@@ -375,7 +377,6 @@ get_sub_def_array(sub_def *sub_def_list, long sub_def_count)
 {
   long i, *temp_sub_def_array, *get_dev_array();
   sub_def *temp_sub_def;
-  int tempint;
   
   if (sub_def_count <= 0) return(NULL);
 
@@ -425,7 +426,6 @@ search_sub_def(long *sub_def_array, long sub_def_count, char *name)
 {
   int lower, mid, upper;
   int temp;
-  int tempint;
 
   lower = 0;
   upper = sub_def_count - 1;

@@ -18,6 +18,7 @@
 #include "jsim.h"
 #include "extern.h"
 
+#include <stdlib.h>
 
 void
 read_jj()
@@ -351,7 +352,6 @@ void
 jj_matrix()
 {
   dev_jj *temp;
-  m_data *temp_m;
   mod_jj *temp_mod;
   device *temp_dev;
   int exist;
@@ -541,7 +541,6 @@ jj_fix_trap(int source_only, int *need_lu, double *hptr)
   double source_val, phi_guess, sval;
   double xn1, xn1d, yn1, yn1d, two_c_hn;
   int current_piece;
-  int tempc;
 
   temp_dev = jj;
 

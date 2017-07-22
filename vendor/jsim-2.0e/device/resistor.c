@@ -163,7 +163,6 @@ resis_matrix()
 {
   dev_resis *temp;
   device *temp_dev;
-  double g;
   int exist;
 
   temp_dev = resis;
@@ -228,7 +227,6 @@ resis_trap(int source_only)
 {
   dev_resis *temp;
   device *temp_dev;
-  int exist;
   double g_val;
 
   if (source_only == TRUE) return;

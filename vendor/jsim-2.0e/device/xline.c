@@ -23,7 +23,6 @@ void
 read_transline()
 {
   long name;
-  modeldata *modptr;
   int bad_dev;
   int type;
 
@@ -153,7 +152,6 @@ xline_to_devlist(long name, int type, long *nodeptr, double *dataptr)
 {
   long n1_plus, n2_plus, n1_minus, n2_minus;
   branch_marker *bmarker;
-  device *temp_dev;
 
   switch (type)
   {
@@ -295,7 +293,6 @@ device *
 add_transline(long name, int type, double *dataptr, long n1_plus,
     long n1_minus, long n2_plus, long n2_minus)
 {
-  int i;
   char *data;
   dev_tran_noloss *temp;
   sub_tran_noloss *temp_sub;
@@ -355,7 +352,6 @@ void
 trans_matrix()
 {
   dev_tran_noloss *temp_noloss;
-  m_data *temp_m;
   device *temp_dev;
   int exist;
 
@@ -574,7 +570,6 @@ transline_trap(int source_only, double *hptr)
 {
   dev_tran_noloss *temp_noloss;
   device *temp_dev;
-  int index, exist;
   double g_val;
 
 
@@ -690,7 +685,6 @@ update_transline(double *hptr)
 {
   dev_tran_noloss *temp_noloss;
   device *temp_dev;
-  int index, exist;
   double g_val, vval, ival;
 
 
@@ -741,10 +735,8 @@ xline_tran_print(FILE *fp, double inc_rate, int prtype, int subtype,
     device *temp_dev)
 {
   long plus1, minus1, plus2, minus2; 
-  double i1, i2;
   double plus1_val, minus1_val, plus2_val, minus2_val;
   double zo, is1past, is2past, is1, is2;
-  modeldata *mod;
 
   switch (temp_dev->type)
   {

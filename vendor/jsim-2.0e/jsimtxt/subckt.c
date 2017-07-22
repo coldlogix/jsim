@@ -347,7 +347,6 @@ get_subdev_name(char *name)
 void
 do_sub_ckt()
 {
-  int tempint;
   char *sub_def_name;
   char *sub_ckt_name;
   device *temp_dev;
@@ -388,7 +387,6 @@ do_sub_ckt()
 void
 expand_sub_ckt()
 {
-  int tempint;
   device *temp_dev;
   device *sub_to_devlist();
 

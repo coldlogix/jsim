@@ -18,6 +18,7 @@
 #include "jsim.h"
 #include "extern.h"
 
+#include <string.h>
 
 void
 read_file()
