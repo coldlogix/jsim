@@ -14,10 +14,23 @@
  *                  Steve Whiteley    (stevew@landau.conductus.com)
  *
  *************************************************************************/
+/*********************************************************************
+* jsim_n 3/8/95	                                                     *
+* stochastic extension of jsim.                                      *
+* British Crown copyright January 1997/DERA.                         *
+*  Permission to use, copy, modify, and distribute this software     * 
+*  for any purpose without fee is hereby granted, provided that the  *
+*  above copyright notice appears in all copies. The copyright       *
+*  holders make no representations about the suitability of this     *
+*  software for any purpose. It is provided "as is" without express  *
+*  or implied warranty. No liability is accepted by the copyright    *
+*  holder for any use made of this software                          *
+**********************************************************************/
 
 #include "jsim.h"
 #include "extern.h"
 
+#include <stdlib.h>
 
 char *
 read_function(int *ftype)
@@ -32,6 +45,8 @@ read_function(int *ftype)
     case PULSE : return(read_pulse());
 
     case PWL : return(read_pwl());
+
+    case NOISE : return(read_noise());
 
     default : *ftype = ILLEGAL;
               printf("## Error -- illegal source type %s", tempstring); 
@@ -78,6 +93,32 @@ read_sin()
   return((char *) temp_sin);
 
 }   /* read_sin */
+
+char *
+read_noise()
+
+{
+  f_noise *temp_noise;
+
+  read_error = read_double(dataptr, "amplitude", FALSE);
+  read_error = read_double(dataptr+1, "delay", FALSE);
+  read_error = read_double(dataptr+2, "tstep", FALSE);
+
+  if (read_error != OK)
+  {
+    printf("## Error -- illegal noise source definition\n");
+    return(NULL);
+  }
+  
+  temp_noise = (f_noise *) mycalloc(1, sizeof(f_noise));
+
+  temp_noise->amp = dataptr[0];
+  temp_noise->td = dataptr[1];
+  temp_noise->tstep = dataptr[2];
+
+  return((char *) temp_noise);
+
+}   /* read_noise */
 
 
 char *
@@ -166,13 +207,35 @@ read_pwl()
 }   /* read_pwl */
 
 
+
+void gauss_ran(double *r1, double *r2) 
+/* formula from page 953 Abramowitz
+    and Stegun, 26.8.6.3*/
+
+{
+ double twopi = 6.28318530718;
+ double u1,u2,lt;
+#ifdef NORANDOM
+ u1 = (double)(rand()+1) / (RAND_MAX+1);
+ u2 = (double)rand() * twopi / RAND_MAX;
+#else
+ double scale = 1.0/1024.0/1024.0/1024.0/2.0;
+ u1=random()*scale;
+ u2=random()*scale*twopi;
+#endif 
+ lt= sqrt( -2.0 * log(u1) );
+ *r1=cos(u2)*lt;
+ *r2=sin(u2)*lt;
+ }
+
 double
 func_eval(int ftype, char *fparm, double time)
 {
   f_sin *temp_sin;
   f_pulse *temp_pulse;
   f_pwl *temp_pwl;
-  double temp_val;
+  f_noise *temp_noise;
+  double temp_val,r1,r2;
   int index, index2;
 
 
@@ -193,6 +256,17 @@ func_eval(int ftype, char *fparm, double time)
                       sin(PI2*temp_sin->freq*(time - temp_sin->td));
 
          return(temp_val);
+
+    case NOISE :
+          temp_noise = (f_noise *) fparm;
+         if (time < temp_noise->td)
+           temp_val = 0.0;
+         else
+           { gauss_ran(&r1,&r2); 
+           /* could make this more efficient by using both r1 and r2 */
+             temp_val = temp_noise->amp * r1 / sqrt(2.0*(time-last_time));}
+
+          return(temp_val);
 
     case PULSE : 
 
@@ -260,6 +334,7 @@ func_breakpoint(int ftype, char *fparm, double max_step, double ftime)
   f_sin *temp_sin;
   f_pulse *temp_pulse;
   f_pwl *temp_pwl;
+   f_noise *temp_noise;
   double temp_val, temp_time;
   int index, index2;
 
@@ -274,6 +349,15 @@ func_breakpoint(int ftype, char *fparm, double max_step, double ftime)
          if (temp_val < max_step) 
            add_breakpoint(temp_sin->td, ftime, temp_val);
 
+         return;
+    case NOISE :
+           temp_noise = (f_noise *) fparm;
+ 
+         temp_val = temp_noise->tstep;
+         if (temp_val < max_step) 
+           add_breakpoint(temp_noise->td, ftime, temp_val);
+
+  
          return;
 
     case PULSE : 
@@ -374,6 +458,7 @@ func_infoprint(FILE *fp, int ftype, char *fparm)
   f_sin *temp_sin;
   f_pulse *temp_pulse;
   f_pwl *temp_pwl;
+  f_noise *temp_noise;
   
   switch(ftype)
   {
@@ -388,6 +473,15 @@ func_infoprint(FILE *fp, int ftype, char *fparm)
                            temp_sin->theta);
                    
                break;
+    case NOISE:               
+               temp_noise = (f_noise *) fparm;
+               fprintf(fp, "NOISE");
+               fprintf(fp, " amplitude %.2e tstep %.2e",
+                           temp_noise->amp, temp_noise->tstep);
+               fprintf(fp, " td %.2e",
+                            temp_noise->td);
+                   
+                break;
 
     case PULSE :
                  temp_pulse = (f_pulse *) fparm;
@@ -426,6 +520,7 @@ new_function(int ftype, char **f1, char *f2)
   f_sin *temp_sin;
   f_pulse *temp_pulse;
   f_pwl *temp_pwl;
+  f_noise *temp_noise;
 
   switch(ftype)
   {
@@ -439,6 +534,15 @@ new_function(int ftype, char **f1, char *f2)
           temp_sin->td = ((f_sin *) f2)->td;
           temp_sin->theta = ((f_sin *) f2)->theta;
           return;
+
+    case NOISE :
+
+           *f1 = mycalloc(1, sizeof(f_noise));
+           temp_noise = (f_noise *) (*f1);
+           temp_noise->amp = ((f_noise *) f2)->amp;
+           temp_noise->tstep = ((f_noise *) f2)->tstep;
+           temp_noise->td = ((f_noise *) f2)->td;
+           return;
    
     case PULSE : 
             *f1 = mycalloc(1, sizeof(f_pulse));

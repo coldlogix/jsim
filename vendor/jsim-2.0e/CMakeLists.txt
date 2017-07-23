@@ -42,8 +42,8 @@ target_include_directories(jsim_n
 
 target_link_libraries(jsim_n
   PUBLIC
-    jsim_ndevice
-    jsim_ntxt
+    jsimdevice
+    jsimtxt
 )
 #doc: 
 #	nroff -ms manual.ms
