@@ -17,6 +17,7 @@
 
 #include "jsim.h"
 #include "extern.h"
+#include "setup.h"
 #include <time.h>
 
 #include <stdlib.h>
@@ -240,6 +241,7 @@ init_node_map()
 
 
 extern FILE *fp;
+void read_includefile();
 
 
 void
@@ -291,9 +293,12 @@ read_deck()
   }
 
   do {
-
     ignore_separator(linesave);
+
+    strcpy(linesave_lower, linesave); /* save a lowercase version for filenames */
+
     line = (char *) linesave;
+    string_to_upper(line);
 
     read_error = read_string("");
     if ((read_error == OK) && (*tempstring != '.'))
@@ -319,6 +324,8 @@ read_deck()
              case PRINT :  read_print(); break;
              case OPTIONS : read_option(); break;
              case NEWFILE : read_file(); break;
+             case INCLUDEFILE : read_includefile(); break;
+
              case SUBCKT : read_sub_def(); break;
              case ENDS : 
 
@@ -332,6 +339,7 @@ read_deck()
              case ILLEGAL : 
 
                   printf("## Error -- illegal control card\n");
+                  print_file_stack();
                   no_go = TRUE;
                   break;
            }
@@ -340,6 +348,7 @@ read_deck()
       case ILLEGAL : 
 
            printf("## Error -- illegal input card\n");
+           print_file_stack();
            no_go = TRUE;
            break;
     }
@@ -469,6 +478,93 @@ datestring()
 	return s;
 }
 
+/*
+ * This is a stack of included files being read
+ *
+ * It's static for convenience and a bit of a hack.
+ */
+
+
+int current_input_file=-1;
+
+included_file included_files[MAX_INCLUDE_FILES];
+
+
+/*
+ * print the 'current' file and line number, and the path
+ * of files and line numbers that lead up to it...
+ */
+
+void print_file_stack() {
+    for (int f=current_input_file; f>=0; f--) {
+        if (f!=current_input_file) {
+            printf("Included in ");
+        }
+        printf("%s:%d\n", included_files[f].filename, included_files[f].line_number);
+    }
+}
+
+int add_input_file(char *filename, FILE *fp) {
+    
+    if (current_input_file == MAX_INCLUDE_FILES - 1)
+    {
+        printf("## Warning -- cannot specify more than %d nested input files: ",
+               MAX_INCLUDE_FILES);
+        print_file_stack();
+        return -1;
+    }
+    
+    current_input_file++;
+    included_files[current_input_file].filename = new_string(filename);
+    included_files[current_input_file].line_number = 0;
+    included_files[current_input_file].fp = fp;
+    
+    return 0;
+}
+
+int open_input_file(char *filename) {
+    FILE *temp_fp, *fopen();
+
+    temp_fp = fopen(filename, "r");
+    
+    if (temp_fp == NULL)
+    {
+        printf("## Warning -- cannot open file %s\n", tempstring);
+        print_file_stack();
+        return -2;
+    }
+    
+    if (add_input_file(filename, temp_fp)) {
+        fclose(temp_fp); // error adding the file... close it...
+        return -3;
+    }
+
+    return 0;
+}
+
+void read_includefile() {
+    if (jsim_raw) {
+        (void) read_string("");
+        return;
+    }
+    
+    /* Sort of gross hack to use the lowercase version of the string: */
+    line=line-linesave+linesave_lower;
+    read_error = read_string("file name to include");
+    line=line-linesave_lower + linesave;
+
+    if (read_error != OK)
+    {
+        printf("## Warning -- illegal file specification\n");
+        return;
+    }
+    
+    if (open_input_file(tempstring)) {
+        return; // error
+    }
+    
+    return;
+}    /* read_file */
 
 void
 read_option()

@@ -10,6 +10,7 @@ set (JSTCOMMONSRC
     picture.c 
     setup.c 
     srchsort.c 
+    ../include/setup.h 
 )
 
 add_library(jsimtxt

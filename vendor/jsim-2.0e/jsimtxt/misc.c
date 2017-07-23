@@ -17,9 +17,7 @@
 
 #include "jsim.h"
 #include "extern.h"
-
-extern FILE *fp;
-
+#include "setup.h"
 
 char *
 mycalloc(int num, int size)
@@ -33,6 +31,14 @@ mycalloc(int num, int size)
 }  /* mycalloc */
 
 
+void string_to_upper(char *line) {
+    for (int a=0; line[a]!=0; a++) {
+        int c=line[a];
+        if ((c>='a') && (c<='z')) {
+            line[a] = c - 'a' + 'A';
+        }
+    }
+}
 int
 readline(char *line)
 {
@@ -45,12 +51,14 @@ readline(char *line)
 
   read_error = OK;
 
+  fp=included_files[current_input_file].fp;
+  included_files[current_input_file].line_number++;
+    
   do
   {
     c = getc(fp);
     if ((c != '\n') && (c != EOF))
     {
-      if ((c >= 'a') && (c <= 'z')) c = 'A' + c - 'a';
       *(line + i) = c;
       printf("%c", c);
       i++;
@@ -70,21 +78,31 @@ readline(char *line)
         printf("%c", c);
         *(line + i) = ' ';
         i++;
+        included_files[current_input_file].line_number++;
       }
     }
     else line_end = TRUE;
   }
   while (line_end == FALSE);
-
   
   if (c == '\n')
   {
     *(line + i) = '\0';
-    if (!strcmp(line,".END"))
+    if (!strcasecmp(line,".END"))
       return (EOF);
     return(EOF + 1);
   }
-  else return(EOF);
+
+    /* end of file... */
+    if (current_input_file>0) {
+        /* If this file was included, we should continue */
+        /* with the previous file... */
+        current_input_file--;
+        *(line + i) = '\0';
+        return(EOF + 1);
+    }
+
+  return(EOF);
 
 }  /* readline */
    
@@ -432,6 +450,7 @@ get_string_keyword(char *keyword)
   if (strcmp(keyword, ".OPTIONS") == 0) return(OPTIONS);
   if (strcmp(keyword, ".TRAN") == 0) return(TRAN);
   if (strcmp(keyword, ".FILE") == 0) return(NEWFILE);
+  if (strcmp(keyword, ".INCLUDE") == 0) return(INCLUDEFILE);
   if (strcmp(keyword, ".SUBCKT") == 0) return(SUBCKT);
   if (strcmp(keyword, ".ENDS") == 0) return(ENDS);
   if (strcmp(keyword, "PWL") == 0) return(PWL);

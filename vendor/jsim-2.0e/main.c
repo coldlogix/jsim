@@ -51,6 +51,7 @@
 #include "jsim.h"
 #include "global.h"
 #include "extern.h"
+#include "setup.h"
 #include <sys/types.h>
 #include <sys/time.h>
 
@@ -91,10 +92,9 @@ main(int argc, char **argv)
         do_opts(argv[i]+1);
     }
     else {
-      fp = fopen(argv[i],"r");
-      if (fp == NULL)
+      if (open_input_file(argv[i])) {
         printf("\nCan't open %s\n",argv[i]);
-      else {
+      } else {
         if (jsim_raw)
           printf("\nReading %s\n",argv[i]);
         run_jsim();
@@ -103,7 +103,8 @@ main(int argc, char **argv)
     }
   }
   if (tried == FALSE) {
-    fp = stdin;
+    add_input_file("stdin", stdin);
+
     if (jsim_raw)
       printf("\nReading stdin\n");
     run_jsim();

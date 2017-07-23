@@ -141,6 +141,7 @@ int jsim_mout;
 int read_error;
 char *dev_name;
 char linesave[50000];
+char linesave_lower[50000];
 char *line;
 char namestring[200];
 char tempstring[50000];

@@ -22,7 +22,6 @@
 
 void
 read_file()
-
 {
   int i;
   FILE *temp_fp, *fopen();

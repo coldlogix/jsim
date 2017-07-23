@@ -141,6 +141,8 @@ extern int jsim_raw;
 extern int read_error;
 extern char *dev_name;
 extern char linesave[];
+extern char linesave_lower[];
+
 extern char *line;
 extern char namestring[];
 extern char tempstring[];
@@ -203,6 +205,7 @@ extern void clear_nonlin_source(void);
 /* misc.c */
 extern char *mycalloc(int,int);
 extern int  readline(char*);
+extern void string_to_upper(char *line);
 extern void ignore_separator(char*);
 extern int  read_int(int*,char*,int);
 extern int  read_long(long*,char*,int);

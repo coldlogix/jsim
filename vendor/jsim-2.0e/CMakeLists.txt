@@ -7,6 +7,11 @@ add_subdirectory(jsimtxt)
 
 add_executable(jsim
     main.c
+
+    include/jsim.h
+    include/global.h
+    include/extern.h
+    include/setup.h
 )
 
 target_include_directories(jsim
@@ -23,6 +28,11 @@ target_link_libraries(jsim
 
 add_executable(jsim_n
     main_n.c
+
+    include/jsim_n.h
+    include/global.h
+    include/extern_n.h
+    include/setup.h
 )
 
 target_include_directories(jsim_n

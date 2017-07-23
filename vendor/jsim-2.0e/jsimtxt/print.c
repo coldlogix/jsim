@@ -237,7 +237,7 @@ do_print()
         }
       }
     }
-    else     /* is_dev is TURE */
+    else     /* is_dev is TRUE */
     {
       type = get_devname_type(temp_print->dev_name);
       if ((type != ILLEGAL) && (type != COMMENT))

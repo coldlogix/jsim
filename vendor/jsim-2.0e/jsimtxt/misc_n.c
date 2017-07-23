@@ -51,6 +51,15 @@ int num, size;
 }  /* mycalloc */
 
 
+void string_to_upper(char *line) {
+    for (int a=0; line[a]!=0; a++) {
+        int c=line[a];
+        if ((c>='a') && (c<='z')) {
+            line[a] = c - 'a' + 'A';
+        }
+    }
+}
+
 int
 readline(line)
 
@@ -104,7 +113,7 @@ char *line;
   if (c == '\n')
   {
     *(line + i) = '\0';
-    if (!strcmp(line,".END"))
+    if (!strcasecmp(line,".END"))
       return (EOF);
     return(EOF + 1);
   }
