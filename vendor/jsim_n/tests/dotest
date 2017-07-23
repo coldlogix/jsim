@@ -1,0 +1,35 @@
+#!/bin/csh
+#
+# tests performance of jsim or near relation.
+#
+set VICTIM = ../jsim_n/jsim_n
+set iter = 16
+# number of iterations for random averages
+# remove old test detritus
+rm -f /tmp/jsimtest
+
+if ($#argv == 1 ) then
+ set TESTS = test${argv[1]}.js
+else
+ set TESTS = test*.js
+endif
+
+foreach  i  ( ${TESTS} )
+	echo ${i}
+	grep '^\*WHY' ${i}
+if ($i =~ *n.js ) then
+set j = $iter
+while ( $j > 0 )
+	${VICTIM} < $i > /tmp/jsimtest
+	set ans = `grep "^[0-9]" /tmp/jsimtest`
+        echo $ans[3]
+	@ j = $j - 1
+end
+else
+	${VICTIM} < $i > /tmp/jsimtest
+	grep '^[0-9]' /tmp/jsimtest
+endif
+	grep '^\*REF' /tmp/jsimtest
+	echo ' '
+end
+rm -f /tmp/jsimtest

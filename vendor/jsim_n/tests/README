@@ -1,0 +1,21 @@
+This directory contains the test suite I use to check the performance.
+The shell script dotest will run the tests. Tests with an n in the name
+of the file involve noise, so the results will vary from run to run. By
+default dotest performs these 16 times, and list of values is printed.
+
+For convenience, two small c programmes are included. ah.c calculates
+the voltage expected on an RSJ junction using the Ambegoakar-Halperin
+solution. rt.c checks the properties of one of the system's random
+number generators. You can set which one to use by defining an appropriate
+symbol at compilation. See the source for details.
+
+**********************************************************************
+*  (c) British Crown copyright January 1997/ DERA.                                 *
+*  Permission to use, copy, modify, and distribute this software     * 
+*  and documentation for any purpose without fee is hereby granted,  *
+*  provided that the above copyright notice appears in all copies    *
+*  The copyright holders make no representations about the           *
+*  suitability of this software for any purpose. It is provided      *
+*  "as is" without express or implied warranty. No liability is      *
+*  by the copyright holder for any use made of this software         *
+**********************************************************************
