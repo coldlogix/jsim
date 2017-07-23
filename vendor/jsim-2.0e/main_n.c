@@ -124,7 +124,7 @@ char **argv;
     }
   }
   if (tried == FALSE) {
-    fp = stdin;
+    add_input_file("stdin", stdin);
     if (jsim_raw)
       printf("\nReading stdin\n");
     run_jsim();
