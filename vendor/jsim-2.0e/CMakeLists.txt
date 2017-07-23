@@ -4,6 +4,7 @@ project(jsim C)
 
 add_subdirectory(device)
 add_subdirectory(jsimtxt)
+add_subdirectory(jsim_n-tests)
 
 add_executable(jsim
     main.c

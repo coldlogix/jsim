@@ -2,7 +2,7 @@
 #
 # tests performance of jsim or near relation.
 #
-set VICTIM = ../jsim_n/jsim_n
+set VICTIM = jsim_n
 set iter = 16
 # number of iterations for random averages
 # remove old test detritus
