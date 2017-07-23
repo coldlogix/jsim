@@ -27,7 +27,7 @@
 *  holder for any use made of this software                          *
 **********************************************************************/
 
-#include "jsim_n.h"
+#include "jsim.h"
 #include "extern_n.h"
 
 #include <stdlib.h>

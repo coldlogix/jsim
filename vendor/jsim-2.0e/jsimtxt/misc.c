@@ -18,6 +18,7 @@
 #include "jsim.h"
 #include "extern.h"
 #include "setup.h"
+#include <strings.h>
 
 char *
 mycalloc(int num, int size)

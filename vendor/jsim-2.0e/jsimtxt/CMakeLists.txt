@@ -10,7 +10,8 @@ set (JSTCOMMONSRC
     picture.c 
     setup.c 
     srchsort.c 
-    ../include/setup.h 
+    ../include/setup.h
+    ../include/jsim.h
 )
 
 add_library(jsimtxt
@@ -21,6 +22,7 @@ add_library(jsimtxt
     subckt.c 
     topology.c 
     tran.c 
+    ../include/extern.h
 )
 
 add_library(jsim_ntxt
@@ -31,6 +33,7 @@ add_library(jsim_ntxt
     subckt_n.c
     topology_n.c
     tran_n.c
+    ../include/extern_n.h 
 )
 
 target_include_directories(jsimtxt

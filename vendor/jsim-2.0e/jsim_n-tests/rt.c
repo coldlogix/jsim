@@ -11,7 +11,7 @@
 #define  RANDGEN random()/2048.0/1024.0/1024.0 
 #endif
 
-void main(void)
+int main(void)
 {
 double x,vals[128],corr[128],d[128],mom[4],dmom[3];
 int i,j,k,n;
@@ -52,4 +52,5 @@ for (i=0;i<8;i++)
 	printf("%8.4f ",d[8*j+i]);
       printf("\n");
        }
+    return 0;
 }

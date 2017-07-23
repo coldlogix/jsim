@@ -30,7 +30,7 @@ target_link_libraries(jsim
 add_executable(jsim_n
     main_n.c
 
-    include/jsim_n.h
+    include/jsim.h
     include/global.h
     include/extern_n.h
     include/setup.h

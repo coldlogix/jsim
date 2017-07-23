@@ -48,7 +48,7 @@
  *************************************************************************/
 
 
-#include "jsim_n.h"
+#include "jsim.h"
 #include "global.h"
 #include <sys/types.h>
 #include <sys/timeb.h>

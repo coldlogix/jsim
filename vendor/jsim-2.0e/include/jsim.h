@@ -14,12 +14,24 @@
  *                  Steve Whiteley    (stevew@landau.conductus.com)
  *
  *************************************************************************/
+/*********************************************************************
+* jsim_n 3/8/95	                                                     *
+* stochastic extension of jsim.                                      *
+* (c) British Crown copyright January 1997/DERA.                     *
+*  Permission to use, copy, modify, and distribute this software     * 
+*  for any purpose without fee is hereby granted, provided that the  *
+*  above copyright notice appears in all copies. The copyright       *
+*  holders make no representations about the suitability of this     *
+*  software for any purpose. It is provided "as is" without express  *
+*  or implied warranty. No liability is accepted by the copyright    *
+*  holder for any use made of this software                          *
+**********************************************************************/
 
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <math.h>
-
+#ifdef NORANDOM
+#include <stdlib.h>
+#endif
 
 /* constants */
 #define GROUND              -1
@@ -145,7 +157,8 @@ typedef struct temppivot
 #define TRANSLINE               16
 #define TRAN_NO_LOSS            17
 #define LOSSLESS_LINE           18
-
+#define NOISE_V                 19
+#define NOISE_I                 20
 
 typedef struct modtype {
     char *name;
@@ -227,6 +240,12 @@ typedef struct func_pwl {
     int pre_piece;
     double *timedata;
   }  f_pwl;
+
+typedef struct func_noise {
+       double amp;
+       double td;
+       double tstep;
+   } f_noise;
 
 #define POLY_ORDER    1
 #define TWO_E_HBAR    3.038510188e15
@@ -410,6 +429,39 @@ typedef struct dd_sini {
     long n_plus, n_minus;
     int p_node, m_node;
   } sub_sini;
+
+/* noise voltage source */
+
+typedef struct d_noisev {
+    double vo;
+    double td;
+    double allowed_step;
+    long n_plus, n_minus;
+  } dev_noisev;
+
+typedef struct dd_noisev {
+    double vo;
+    double td;
+    long n_plus, n_minus;
+    int p_node, m_node;
+  } sub_noisev;
+
+
+/* noise current source */
+
+typedef struct d_noisei {
+    double io;
+    double td;
+    double allowed_step;
+    long n_plus, n_minus;
+  } dev_noisei;
+
+typedef struct dd_noisei {
+    double io;
+    double td;
+    long n_plus, n_minus;
+    int p_node, m_node;
+  } sub_noisei;
 
 
 /* pulse voltage source */
@@ -701,7 +753,7 @@ typedef struct fchecktype {
 
 #define DEF_MAX_FLUX_STEP  0.5e-15
 
-#define DEF_NU_DIGIT       3
+#define DEF_NU_DIGIT       15
 
 #define DEF_VN_GUESS_MIN   0.5e-3
 #define VN_GUESS_REF       2.0e-3
@@ -780,7 +832,7 @@ typedef struct d_breakpoint {
 #define PORT2                53
 #define MAXFLUXSTEP          54
 #define FVALUE               55
-/* 56 is NOISE ... should merge */
+#define NOISE                56
 #define INCLUDEFILE          57
 
 /* default parameters */

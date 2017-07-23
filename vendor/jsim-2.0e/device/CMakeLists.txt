@@ -16,11 +16,15 @@ set (COMMONDEVSRC
 add_library(jsimdevice
     ${COMMONDEVSRC}
     device.c 
+    ../include/extern.h
+    ../include/jsim.h
 )
 
 add_library(jsim_ndevice
     ${COMMONDEVSRC}
     device_n.c 
+    ../include/extern_n.h
+    ../include/jsim.h
 )
 
 target_include_directories(jsimdevice
