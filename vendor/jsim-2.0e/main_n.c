@@ -198,7 +198,6 @@ run_jsim()
     printf("\nSimulation ran %.2f seconds.\n",-t/1000.0);
     printf("This Stochastic extension to JSIM  bought to you by\n");
     printf("Julian Satchell, DRA(Malvern), UK. \n");
-    printf("satchell@dra.hmg.gb\nOur WWW page is at: www.dera.hmg.gb\n");
 /*
     printf("lu op count %d\n", lu_opcount);
 */
