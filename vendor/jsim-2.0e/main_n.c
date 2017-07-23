@@ -95,7 +95,7 @@ char **argv;
   for (i = 1; i < argc; i++) {
     if (*argv[i] == '-') {
       if (*(argv[i]+1) == '\0') {
-        fp = stdin;
+        add_input_file("stdin", stdin);
         if (jsim_raw)
           printf("\nReading stdin\n");
         run_jsim();
@@ -113,10 +113,9 @@ char **argv;
         }
     }
     else {
-      fp = fopen(argv[i],"r");
-      if (fp == NULL)
+      if (open_input_file(argv[i])) {
         printf("\nCan't open %s\n",argv[i]);
-      else {
+      } else {
         if (jsim_raw)
           printf("\nReading %s\n",argv[i]);
         run_jsim();

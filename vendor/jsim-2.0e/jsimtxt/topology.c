@@ -199,7 +199,8 @@ cutset_check()
           case I_SOURCE :
           case SIN_I :
           case PULSE_I :
-          case PWL_I : break;
+          case PWL_I :
+          case NOISE_I : break;
 
           case CAP : capacitor = TRUE;
                      break;

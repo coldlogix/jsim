@@ -82,7 +82,7 @@ main(int argc, char **argv)
   for (i = 1; i < argc; i++) {
     if (*argv[i] == '-') {
       if (*(argv[i]+1) == '\0') {
-        fp = stdin;
+        add_input_file("stdin", stdin);
         if (jsim_raw)
           printf("\nReading stdin\n");
         run_jsim();

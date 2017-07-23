@@ -479,14 +479,16 @@ sub_to_devlist(char *dev_name, int type, char *data)
     case SIN_V  :
     case PULSE_V  :
     case PWL_V :
+    case NOISE_V  :
     case V_SOURCE :
-             
          return(vssub_to_devlist(dev_name, data));
 
     case SIN_I :
     case PULSE_I  :
     case PWL_I :
     case I_SOURCE :
+    case NOISE_I  :
+
     
          return(issub_to_devlist(dev_name, data));
 

@@ -1035,106 +1035,151 @@ get_pr_val(double inc_rate, long which_eqn, int which_val)
 void
 print_tran(double the_time, double inc_rate)
 {
-  int i;
-  printdata *temp;
-  double plus_val, minus_val;
-  FILE *fptmp;
-
-  temp = print_list;
-
-  if (temp == NULL) return;
-
-  if (jsim_raw) {
-    fprintf(rawfp,"%d",raw_cntr);
-    fprintf(rawfp,out_format,the_time);
-    raw_cntr++;
-  }
-  else {
-    for (i = 0; i <= file_count; i++)
-        fprintf(fileptr[i], out_format, the_time);
-
-    if (fileptr[MAXFILE] != NULL)
-        fprintf(stdout, out_format, the_time);
-  }
-
-  while (temp != NULL) {
-
-    if (jsim_raw)
-      fptmp = rawfp;
-    else
-      fptmp = temp->fp;
-
-    if (temp->is_dev == FALSE) {
-
-      plus_val = get_pr_val(inc_rate, temp->plus, 0);
-      minus_val = get_pr_val(inc_rate, temp->minus, 0);
-      fprintf(fptmp, out_format, plus_val - minus_val);
+    int i;
+    printdata *temp;
+    double plus_val, minus_val;
+    FILE *fptmp;
+    
+    temp = print_list;
+    
+    if (temp == NULL) return;
+    
+    if (jsim_raw) {
+        fprintf(rawfp,"%d",raw_cntr);
+        fprintf(rawfp,out_format,the_time);
+        raw_cntr++;
     }
     else {
-      /* is_dev is TRUE */ 
-
-      switch(temp->print_dev->type) {
-        case RESIS :
- 
-             resis_tran_print(fptmp, inc_rate, temp->prtype, 
-                              temp->print_dev);
-             break;
-
-        case CAP :
- 
-             cap_tran_print(fptmp, inc_rate, temp->prtype, 
-                            temp->print_dev);
-             break;
-
-        case INDUCT :
- 
-             ind_tran_print(fptmp, inc_rate, temp->prtype, 
-                            temp->print_dev);
-             break;
-
-        case DC_V :
-        case SIN_V :
-        case PULSE_V :
-        case PWL_V :
-        case V_SOURCE :
- 
-             vs_tran_print(fptmp, inc_rate, temp->prtype, 
-                            temp->print_dev);
-             break;
-
-        case SIN_I :
-        case PULSE_I :
-        case PWL_I :
-        case I_SOURCE :
- 
-             is_tran_print(fptmp, inc_rate, temp->prtype, 
-                            temp->print_dev, the_time);
-             break;
-
-        case JJ :
- 
-             jj_tran_print(fptmp, inc_rate, temp->prtype, 
-                            temp->subtype, temp->print_dev);
-             break;
-
-        case TRAN_NO_LOSS :
- 
-             xline_tran_print(fptmp, inc_rate, temp->prtype, 
-                            temp->subtype, temp->print_dev);
-             break;
-
-      }  /* switch */
+        if (jsim_mout && mfile) {
+            fprintf(mfile, out_format, the_time);
+        } else {
+            for (i = 0; i <= file_count; i++)
+                fprintf(fileptr[i], out_format, the_time);
+            if (fileptr[MAXFILE] != NULL)
+                fprintf(stdout, out_format, the_time);
+        }
+        
     }
-
-    temp = temp->next_print;
-
-  }   /* while */
-
-  if (jsim_raw == FALSE) {
-    for (i = 0; i <= file_count; i++)
-      fprintf(fileptr[i], "\n");
-
-    if (fileptr[MAXFILE] != NULL) fprintf(stdout, "\n");
-  }
-
+    
+    while (temp != NULL) {
+        
+        if (jsim_raw)
+            fptmp = rawfp;
+        else
+            fptmp = temp->fp;
+        
+        if (temp->is_dev == FALSE) {
+            
+            plus_val = get_pr_val(inc_rate, temp->plus, 0);
+            minus_val = get_pr_val(inc_rate, temp->minus, 0);
+            if (jsim_mout && mfile) {
+                fprintf(mfile, out_format, plus_val - minus_val);
+            } else {
+                fprintf(fptmp, out_format, plus_val - minus_val);
+            }
+        }
+        else {
+            /* is_dev is TRUE */
+            
+            switch(temp->print_dev->type) {
+                case RESIS :
+                    if (jsim_mout && mfile) {
+                        resis_tran_print(mfile, inc_rate, temp->prtype, temp->print_dev);
+                    } else {
+                        resis_tran_print(fptmp, inc_rate, temp->prtype,
+                                         temp->print_dev);
+                    }
+                    break;
+                    
+                case CAP :
+                    if (jsim_mout && mfile) {
+                        cap_tran_print(mfile, inc_rate, temp->prtype, temp->print_dev);
+                    } else {
+                        cap_tran_print(fptmp, inc_rate, temp->prtype,
+                                       temp->print_dev);
+                    }
+                    break;
+                    
+                case INDUCT :
+                    
+                    
+                    if (jsim_mout && mfile) {
+                        ind_tran_print(mfile, inc_rate, temp->prtype, temp->print_dev);
+                    } else {
+                        ind_tran_print(fptmp, inc_rate, temp->prtype,
+                                       temp->print_dev);
+                    }
+                    break;
+                    
+                case DC_V :
+                case SIN_V :
+                case PULSE_V :
+                case PWL_V :
+                case NOISE_V :
+                case V_SOURCE :
+                    
+                    
+                    if (jsim_mout && mfile) {
+                        vs_tran_print(mfile, inc_rate, temp->prtype, temp->print_dev);
+                    } else {
+                        vs_tran_print(fptmp, inc_rate, temp->prtype,
+                                      temp->print_dev);
+                    }
+                    break;
+                    
+                case SIN_I :
+                case PULSE_I :
+                case PWL_I :
+                case NOISE_I :
+                case I_SOURCE :
+                    
+                    
+                    if (jsim_mout && mfile) {
+                        is_tran_print(mfile, inc_rate, temp->prtype, temp->print_dev, the_time);
+                    } else {
+                        is_tran_print(fptmp, inc_rate, temp->prtype,
+                                      temp->print_dev, the_time);
+                    }
+                    break;
+                    
+                case JJ :
+                    
+                    
+                    if (jsim_mout && mfile) {
+                        jj_tran_print(mfile, inc_rate, temp->prtype, temp->subtype, temp->print_dev);
+                    } else {
+                        jj_tran_print(fptmp, inc_rate, temp->prtype,
+                                      temp->subtype, temp->print_dev);
+                    }
+                    break;
+                    
+                case TRAN_NO_LOSS :
+                    
+                    
+                    if (jsim_mout && mfile) {
+                        xline_tran_print(mfile, inc_rate, temp->prtype, temp->subtype, temp->print_dev);
+                    } else {
+                        xline_tran_print(fptmp, inc_rate, temp->prtype,
+                                         temp->subtype, temp->print_dev);
+                    }
+                    break;
+                    
+            }  /* switch */
+        }
+        
+        temp = temp->next_print;
+        
+    }   /* while */
+    
+    if (jsim_mout && mfile) {
+        fprintf(mfile, "\n");
+    } else {
+        if (jsim_raw == FALSE) {
+            for (i = 0; i <= file_count; i++)
+            {fprintf(fileptr[i], "\n");fflush(fileptr[i]);}
+            
+            if (fileptr[MAXFILE] != NULL) {fprintf(stdout, "\n");fflush(stdout);}
+        }
+    }
+    
 }   /* print_tran */

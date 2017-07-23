@@ -14,6 +14,18 @@
  *                  Steve Whiteley    (stevew@landau.conductus.com)
  *
  *************************************************************************/
+/*********************************************************************
+* jsim_n 3/8/95	                                                     *
+* stochastic extension of jsim.                                      *
+* (c) British Crown copyright January 1997 DERA.                     *
+*  Permission to use, copy, modify, and distribute this software     * 
+*  for any purpose without fee is hereby granted, provided that the  *
+*  above copyright notice appears in all copies. The copyright       *
+*  holders make no representations about the suitability of this     *
+*  software for any purpose. It is provided "as is" without express  *
+*  or implied warranty. No liability is accepted by the copyright    *
+*  holder for any use made of this software                          *
+**********************************************************************/
 
 extern FILE *fileptr[];
 extern FILE *current_fp;
@@ -136,13 +148,13 @@ extern int warned;
 extern int igwarn_no_go;
 extern int jsim_dbg;
 extern int jsim_raw;
+extern int jsim_mout;
 
 
 extern int read_error;
 extern char *dev_name;
 extern char linesave[];
 extern char linesave_lower[];
-
 extern char *line;
 extern char namestring[];
 extern char tempstring[];
@@ -150,6 +162,8 @@ extern double dataptr[];
 extern long nodeptr[];
 extern long intptr[];
 extern char *filename[];
+
+extern FILE *mfile;
 
 extern double hptr[];
 
@@ -159,6 +173,8 @@ extern double *bkpoint_time, *bkpoint_step;
 extern FILE *rawfp;
 extern int raw_cntr;
 
+
+#if __STDC__
 
 /* debug.c */
 extern void sperror(int);
@@ -172,6 +188,7 @@ extern void print_b(source*,int);
 /* function.c */
 extern char *read_function(int*);
 extern char *read_sin(void);
+extern char *read_noise(void);
 extern char *read_pulse(void);
 extern char *read_pwl(void);
 extern double func_eval(int,char*,double);
@@ -251,6 +268,7 @@ extern void read_print(void);
 extern void add_pr_node(FILE*,int,int);
 extern void add_pr_device(FILE*,char*,int,int);
 extern void do_print(void);
+extern void print_header(FILE*);
 
 /* setup.c */
 extern void init_global(void);
@@ -385,7 +403,7 @@ extern device *add_dev(long,int,char*);
 extern long add_realname(char*);
 
 /* inductor.c */
-extern void read_ind(void);
+extern void rread_ind(void);
 extern device *ind_to_devlist(long,int,long*,long*,double*);
 extern device *ind_to_deftree(char*,int,long*,long*,double*);
 extern device *indsub_to_devlist(char*,int,char*);
@@ -470,3 +488,315 @@ extern void transline_trap(int,double*);
 extern void update_transline(double*);
 extern void xline_tran_print(FILE*,double,int,int,device*);
 
+#else
+
+/* debug.c */
+extern void sperror();
+extern void print_A();
+extern void print_cA();
+extern void print_A_LU();
+extern void print_stat_LU();
+extern void print_x();
+extern void print_b();
+
+/* function.c */
+extern char *read_function();
+extern char *read_sin();
+extern char *read_noise();
+extern char *read_pulse();
+extern char *read_pwl();
+extern double func_eval();
+extern void func_breakpoint();
+extern void func_infoprint();
+extern void new_function();
+
+/* matrix.c */
+extern m_data *find_i_j();
+extern m_data *add_i_j();
+extern m_data *add_next();
+extern void create_rowptr();
+extern void Axy();
+extern void ex_row();
+extern void ex_col();
+extern s_data *add_source();
+extern x_data *add_unknown();
+extern void ex_unknown();
+extern void ex_source();
+extern void A_LU();
+extern m_data *full_pivot();
+extern m_data *row_pivot();
+extern m_data *diag_pivot();
+extern void solve_Ly_b();
+extern void solve_Ux_y();
+extern void matrix_clear();
+extern void LU_refresh();
+extern void clear_source();
+extern void clear_nonlin_source();
+
+/* misc.c */
+extern char *mycalloc();
+extern int  readline();
+extern void ignore_separator();
+extern int  read_int();
+extern int  read_long();
+extern int  read_string();
+extern char *new_string();
+extern char *combine_string();
+extern char *comb_str_seg();
+extern int  get_multiplier();
+extern int  num_multiplier();
+extern int  read_double();
+extern double myabs();
+extern double mymax();
+extern double mymin();
+extern int  get_string_type();
+extern int  get_devname_type();
+extern int  get_string_keyword();
+extern int  source_type();
+extern int  is_dc_device();
+extern int  node_type();
+
+/* model.c */
+extern void read_model();
+extern modeldata *add_mod();
+extern modeldata *add_to_modlist();
+extern void read_jjmodel();
+extern void assign_jj_mod();
+extern double jjiv();
+
+/* morspace.c */
+extern void free_devarray();
+extern void free_name();
+extern void free_def_tree();
+extern void free_sub_def();
+
+/* picture.c */
+extern void add_frame_point();
+extern double delay_frame_point();
+
+/* print.c */
+extern void read_file();
+extern void read_print();
+extern void add_pr_node();
+extern void add_pr_device();
+extern void do_print();
+
+/* setup.c */
+extern void init_global();
+extern void init_default_global();
+extern void init_dev_global();
+extern void init_A();
+extern void init_source();
+extern void init_unknown();
+extern void init_unk_copy();
+extern void init_b_src_copy();
+extern void init_node_map();
+extern void read_deck();
+extern char *datestring();
+extern void read_option();
+extern void process_deck();
+extern void get_arrays();
+extern void do_dependent();
+extern void get_model();
+extern void free_space();
+extern void setup_device();
+extern void setup_x_unknown();
+extern void setup_A_matrix();
+extern void setup_matrix();
+extern void get_breakpoint();
+extern void topology_check();
+extern void deckerror_check();
+extern void print_node_map();
+extern void print_dev_array();
+extern void print_devlist();
+extern void print_deftree();
+extern void myprint_deftree();
+extern void print_modlist();
+extern void print_realname_name();
+
+/* srchsort.c */
+extern void merge_copy();
+extern void sort_realname();
+extern void merge_realname();
+extern void get_realname_array();
+extern void get_name_array();
+extern realname_name *search_realname();
+extern realname_name *search_name();
+extern void sort_dev();
+extern void merge_dev();
+extern long *get_dev_array();
+extern device *search_dev();
+extern device *search_name_dev();
+extern void sort_sub_def();
+extern void merge_sub_def();
+extern long *get_sub_def_array();
+extern sub_def *search_sub_def();
+extern void get_eqn_array();
+extern void sort_node();
+extern void merge_node();
+extern void get_node_array();
+extern node_to_eqn *search_node();
+extern void sort_model();
+extern void merge_model();
+extern void get_model_array();
+extern modeldata *search_model();
+
+/* subckt.c */
+extern void read_sub_def();
+extern void new_sub_def();
+extern void read_sub_ckt();
+extern device *subckt_to_devlist();
+extern device *subckt_to_deftree();
+extern int  scan_node();
+extern device *add_sub();
+extern device *add_sub_ckt();
+extern long getnode_subnode();
+extern char *get_subdev_name();
+extern void do_sub_ckt();
+extern void expand_sub_ckt();
+extern sub_def *find_sub_def();
+extern device *sub_to_devlist();
+
+/* topology.c */
+extern int  hash_node();
+extern branch_marker *add_bmarker();
+extern int  add_node();
+extern void clear_marker();
+extern void cutset_check();
+extern void trace_subgraph();
+extern void sourceloop_check();
+extern void trace_connect();
+extern void ground_check();
+
+/* tran.c */
+extern void read_tran();
+extern void check_breakpoint();
+extern int  step_control();
+extern void time_loop();
+extern int  nonlinear_loop();
+extern int  guess_next();
+extern int  converge();
+extern int  in_bkpoint();
+extern void init_breakpoint();
+extern void add_breakpoint();
+extern void find_left_bkpoint();
+extern void bkpttree_to_array();
+extern void get_bkpt_subcount();
+extern void get_bkpt_subarray();
+extern void free_bkpt_tree();
+extern void print_bkpt_subtree();
+extern void print_bkpt_tree();
+extern void print_bkpt_array();
+extern void find_dx();
+extern void find_phi();
+extern void update_unknown();
+extern void iteration_update();
+extern int  matrix_iteration_update();
+extern int  matrix_nonlin_iteration_update();
+extern void update_device();
+extern double get_pr_jjic();
+extern double get_pr_val();
+extern void print_tran();
+
+/* cap.c */
+extern void read_cap();
+extern device *cap_to_devlist();
+extern device *cap_to_deftree();
+extern device *capsub_to_devlist();
+extern device *add_cap();
+extern void cap_matrix();
+extern void cap_trap();
+extern void cap_tran_print();
+
+/* device.c */
+extern device *find_dev();
+extern device *add_dev();
+extern long add_realname();
+
+/* inductor.c */
+extern void rread_ind();
+extern device *ind_to_devlist();
+extern device *ind_to_deftree();
+extern device *indsub_to_devlist();
+extern device *add_ind();
+extern void ind_matrix();
+extern void ind_trap();
+extern double ind_step_limit();
+extern int  ind_apriori_step_limit();
+extern void ind_tran_print();
+
+/* isource.c */
+extern void read_is();
+extern device *is_to_devlist();
+extern device *is_to_deftree();
+extern device *issub_to_devlist();
+extern device *add_isource();
+extern void is_matrix();
+extern void is_breakpoint();
+extern double is_eval();
+extern void is_advance();
+extern void is_tran_print();
+
+/* jj.c */
+extern void read_jj();
+extern device *jj_to_devlist();
+extern device *jj_to_deftree();
+extern device *jjsub_to_devlist();
+extern void get_jjmodel();
+extern device *add_jj();
+extern void jj_dependent();
+extern void jj_matrix();
+extern double jj_condev_i();
+extern void jj_quasi();
+extern void jj_fix_trap();
+extern void update_jj();
+extern void jj_iteration_update();
+extern double jj_step_limit();
+extern int  jj_apriori_step_limit();
+extern void jj_tran_print();
+
+/* mutual.c */
+extern void read_mut();
+extern device *mut_to_devlist();
+extern device *mut_to_deftree();
+extern device *mutsub_to_devlist();
+extern device *add_mut();
+extern void mut_dependent();
+extern void mut_matrix();
+extern void mut_trap();
+
+/* resistor.c */
+extern void read_resis();
+extern device *resis_to_devlist();
+extern device *resis_to_deftree();
+extern device *resissub_to_devlist();
+extern device *add_resis();
+extern void resis_matrix();
+extern void resis_trap();
+extern void resis_tran_print();
+
+/* vsource.c */
+extern void read_vs();
+extern device *vs_to_devlist();
+extern device *vs_to_deftree();
+extern device *vssub_to_devlist();
+extern device *add_vsource();
+extern void vs_matrix();
+extern void vs_breakpoint();
+extern double vs_eval();
+extern void vs_advance();
+extern void vs_tran_print();
+
+/* xline.c */
+extern void read_transline();
+extern device *xline_to_devlist();
+extern device *xline_to_deftree();
+extern device *xlinesub_to_devlist();
+extern device *add_transline();
+extern void trans_matrix();
+extern void setup_transline();
+extern void transline_trap();
+extern void update_transline();
+extern void xline_tran_print();
+
+#endif

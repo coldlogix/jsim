@@ -32,7 +32,6 @@ add_executable(jsim_n
 
     include/jsim.h
     include/global.h
-    include/extern_n.h
     include/setup.h
 )
 

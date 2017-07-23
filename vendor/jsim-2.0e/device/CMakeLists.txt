@@ -11,19 +11,18 @@ set (COMMONDEVSRC
 	resistor.c 
 	vsource.c 
 	xline.c
+    ../include/extern.h
 )
 
 add_library(jsimdevice
     ${COMMONDEVSRC}
     device.c 
-    ../include/extern.h
     ../include/jsim.h
 )
 
 add_library(jsim_ndevice
     ${COMMONDEVSRC}
     device_n.c 
-    ../include/extern_n.h
     ../include/jsim.h
 )
 

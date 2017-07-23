@@ -28,7 +28,7 @@
 **********************************************************************/
 
 #include "jsim.h"
-#include "extern_n.h"
+#include "extern.h"
 
 #include <stdlib.h>
 

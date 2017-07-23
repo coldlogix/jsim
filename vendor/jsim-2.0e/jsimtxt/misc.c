@@ -461,6 +461,7 @@ get_string_keyword(char *keyword)
   if (strcmp(keyword, "PWL") == 0) return(PWL);
   if (strcmp(keyword, "PULSE") == 0) return(PULSE);
   if (strcmp(keyword, "SIN") == 0) return(SIN);
+  if (strcmp(keyword, "NOISE") == 0) return(NOISE);
   if (strcmp(keyword, "JJ") == 0) return(JJMODEL);
   if (strcmp(keyword, "XMISSION") == 0) return(TRANMODEL);
   if (strcmp(keyword, "NODEV") == 0) return(NODEV);
@@ -517,12 +518,14 @@ source_type(int devtype)
     case PWL_V :
     case SIN_V :
     case PULSE_V :
-    case DC_V :   return(V_SOURCE);
-    
+    case DC_V :
+    case NOISE_V :  return(V_SOURCE);
+
     case I_SOURCE :
     case SIN_I :
     case PULSE_I :
-    case PWL_I :  return(I_SOURCE);
+    case PWL_I :
+    case NOISE_I :  return(I_SOURCE);
 
     default : return(ILLEGAL);
   }
@@ -541,6 +544,7 @@ is_dc_device(int devtype)
     case SIN_V :
     case PULSE_V :
     case DC_V :
+    case NOISE_V:
     case INDUCT :
     case RESIS :  return(TRUE);
    

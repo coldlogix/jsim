@@ -42,14 +42,17 @@ find_dev(char *real_name, int type)
     case V_SOURCE:
     case DC_V:
     case SIN_V:
-    case PWL_V : 
-         return(search_name_dev(vsource_array, vsource_count, 
+    case PWL_V :
+    case NOISE_V :
+
+         return(search_name_dev(vsource_array, vsource_count,
                                          temp_name->name));
 
     case I_SOURCE:
     case SIN_I:
-    case PWL_I : 
-         return(search_name_dev(isource_array, isource_count, 
+    case PWL_I :
+    case NOISE_I :
+         return(search_name_dev(isource_array, isource_count,
                                          temp_name->name)); 
              
     case JJ    : 
@@ -130,7 +133,9 @@ add_dev(long name, int type, char *data)
     case DC_V :
     case SIN_V :
     case PULSE_V :
-    case PWL_V : 
+    case PWL_V :
+    case NOISE_V :
+
     case V_SOURCE :
          if (vsource == NULL) 
          { 
@@ -149,7 +154,8 @@ add_dev(long name, int type, char *data)
 
     case SIN_I :
     case PULSE_I :
-    case PWL_I : 
+    case PWL_I :
+    case NOISE_I :
     case I_SOURCE :
 
          if (isource == NULL) 
