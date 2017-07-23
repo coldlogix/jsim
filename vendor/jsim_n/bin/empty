@@ -1,4 +1,0 @@
-git won't create the bin directory without a file in it, so this
-forces creation of the bin directory, which is needed to successfully
-compile using the included makefile
-
