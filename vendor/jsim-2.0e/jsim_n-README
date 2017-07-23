@@ -57,7 +57,7 @@ enough that it could be emulated by some other programme if need be.
 Resistors whose names start with Z are left alone, so you can 
 add noise free bias networks, output filters and the like.
 
-There are some tests in the tests subdirectory.
+There are some tests in the jsim_n-tests subdirectory.
 
 
 Julian Satchell (satchell@dra.hmg.gb)        (+44) 1684 895003

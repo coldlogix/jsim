@@ -780,7 +780,8 @@ typedef struct d_breakpoint {
 #define PORT2                53
 #define MAXFLUXSTEP          54
 #define FVALUE               55
-#define INCLUDEFILE          56
+/* 56 is NOISE ... should merge */
+#define INCLUDEFILE          57
 
 /* default parameters */
 #define DEF_RTYPE            0

@@ -290,7 +290,7 @@ func_breakpoint(int ftype, char *fparm, double max_step, double ftime)
            {
              if (temp_time + temp_pulse->tr <= ftime)
                add_breakpoint(temp_time, temp_time + temp_pulse->tr, 
-                            temp_val);
+                              temp_val);
              else 
                add_breakpoint(temp_time, ftime, temp_val);
            }
@@ -301,7 +301,7 @@ func_breakpoint(int ftype, char *fparm, double max_step, double ftime)
            {
              if (temp_time + temp_pulse->pw <= ftime)
                add_breakpoint(temp_time, temp_time + temp_pulse->pw, 
-                            temp_val);
+                              temp_val);
              else 
                add_breakpoint(temp_time, ftime, temp_val);
            }
@@ -312,7 +312,7 @@ func_breakpoint(int ftype, char *fparm, double max_step, double ftime)
            {
              if (temp_time + temp_pulse->tf <= ftime)
                add_breakpoint(temp_time, temp_time + temp_pulse->tf, 
-                            temp_val);
+                              temp_val);
              else 
                add_breakpoint(temp_time, ftime, temp_val);
            }
@@ -324,7 +324,7 @@ func_breakpoint(int ftype, char *fparm, double max_step, double ftime)
            {
              if (temp_time + temp_val <= ftime)
                add_breakpoint(temp_time, temp_time + temp_val, 
-                            0.25*temp_val);
+                              0.25*temp_val);
              else 
                add_breakpoint(temp_time, ftime, 0.25*temp_val);
            }
@@ -350,11 +350,11 @@ func_breakpoint(int ftype, char *fparm, double max_step, double ftime)
            {
              if (temp_pwl->timedata[index2 + 2] <= ftime)
                add_breakpoint(temp_pwl->timedata[index2], 
-                            temp_pwl->timedata[index2 + 2],
-                            temp_val);
+                              temp_pwl->timedata[index2 + 2],
+                              temp_val);
              else
                add_breakpoint(temp_pwl->timedata[index2], ftime,
-                            temp_val);
+                             temp_val);
            }
            index++;
 

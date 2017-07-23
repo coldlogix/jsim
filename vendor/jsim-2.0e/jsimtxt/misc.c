@@ -57,11 +57,15 @@ readline(char *line)
   do
   {
     c = getc(fp);
-    if ((c != '\n') && (c != EOF))
+    if ((c != '\r') && (c != '\n') && (c != EOF))
     {
       *(line + i) = c;
       printf("%c", c);
       i++;
+    }
+    else if (c == '\r')
+    {
+        /* Do nothing. */
     }
     else if (c == '\n')
     {
