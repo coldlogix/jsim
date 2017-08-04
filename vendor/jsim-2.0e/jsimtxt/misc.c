@@ -133,7 +133,7 @@ read_int(int *val, char *error_message, int no_mess_if_blank)
 {
   int i;
 
-  while (*line == ' ') line++;
+  while (*line == ' ' || *line == '\t') line++;
    
   tempstring[0] = '\0';
   sscanf(line, "%s", tempstring);
@@ -163,7 +163,7 @@ read_long(long *val, char *error_message, int no_mess_if_blank)
 {
   int i;
 
-  while (*line == ' ') line++;
+  while (*line == ' ' || *line == '\t') line++;
    
   tempstring[0] = '\0';
   sscanf(line, "%s", tempstring);
@@ -195,7 +195,7 @@ read_string(char *error_message)
 
   tempstring[0] = '\0';
 
-  while (*line == ' ') line++;
+  while (*line == ' ' || *line == '\t') line++;
   if (*line == '\0')
   {
     if (strlen(error_message) > 0)
@@ -322,7 +322,7 @@ read_double(double *val, char *error_message, int no_mess_if_blank)
   int i;
   double multiplier;
 
-  while (*line == ' ') line++;
+  while (*line == ' ' || *line == '\t') line++;
    
   tempstring[0] = '\0';
   sscanf(line, "%s", tempstring);
