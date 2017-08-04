@@ -61,6 +61,9 @@ readline(char *line)
     if ((c != '\r') && (c != '\n') && (c != EOF))
     {
       *(line + i) = c;
+      /* tools like auto3 depend on the output being printed upper case: */
+      if ((c>='a') && (c<='z')) { c=c-'a'+'A'; }
+
       printf("%c", c);
       i++;
     }
