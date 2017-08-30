@@ -48,7 +48,7 @@ from other branches in an appropriate way such that if you have changes
 that you've made, you can easily integrate those with the repository
 and contribute your changes back to the community.
 
-These following branches are available, and their origin and histories are
+The following branches are available, and their origin and histories are
 annotated in the log messages for the commits for each of the branches.
 
 *  vendor_ortlepp_jsim_n
@@ -78,4 +78,11 @@ versions as close to the formats I've found them in as possible, and
 then to normalize the versions, hoping that this will make it easier
 for others to merge any changes that they've made into the repository.
 
+Contributing
+============
+
+If you have changes or enhancements that you'd like to contribute,
+or suggestions for ways to make this repository more useful to you
+or others, please feel free to create a pull requests or issue in
+github, or contact me directly.
 
