@@ -1,8 +1,12 @@
+JSIM Superconducting Circuit Simulator
+======================================
+
 This is JSIM, a Josephson Junction aware spice simulator
 originally written by Emerson S. Fang as part of his work
 in Ted Van Duzer's lab at the University of California, Berkeley
 
-== Quick Start ==
+Quick Start
+===========
 
 If you're new to JSIM, then welcome.  JSIM is meant for superconducting
 simluations of Jospehson Junction based technologies, and does not
@@ -20,20 +24,22 @@ and might still work.
 Here is the super quick guide to get up and running:
 
 Install CMake, and an appropriate build environment on your system.
-
+```bash
 git clone https://github.com/coldlogix/jsim.git
 cd jsim/vendor/jsim-2.0e/
 mkdir build
 cd build
 cmake ..
 make
+```
 
 This should produce both jsim and jsim_n executables.  The jsim_n
 version includes stochastic noise simulation added by J. Satchell in 1995,
 and probably will eventually just become part of jsim in this repository
 in the future.
 
-== Branches ==
+Branches
+========
 
 This repository attempts to collect and order close to 30 years of
 variants of the JSIM project.  There is an attempt to provide branches
@@ -45,12 +51,13 @@ and contribute your changes back to the community.
 These following branches are available, and their origin and histories are
 annotated in the log messages for the commits for each of the branches.
 
-  vendor_ortlepp_jsim_n
-  vendor_stellenbosch_jsim_n
-  vendor_whiteley_jsim_2.0d
-  vendor_whiteley_jsim_2.0e
+*  vendor_ortlepp_jsim_n
+*  vendor_stellenbosch_jsim_n
+*  vendor_whiteley_jsim_2.0d
+*  vendor_whiteley_jsim_2.0e
 
-== History ==
+History
+=======
 
 This git repository is an attempt to collect and consolidate all
 of the various revisions to jsim that have occured over the years
