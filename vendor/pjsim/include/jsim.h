@@ -139,6 +139,7 @@ typedef struct temppivot
 #define PULSE_I                 10
 #define MUTUAL_L                11
 #define JJ                      12
+#define P_JJ                    80  /* addition */
 #define SUB_C                   13
 #define V_SOURCE                14
 #define I_SOURCE                15
@@ -199,7 +200,7 @@ typedef struct MJPS {
     int rtype;
     int cct;
     double icon;
-  } mod_jj;
+  } mod_jj,mod_pjj; /* addition */
 
 
 typedef struct func_sin {
@@ -545,6 +546,41 @@ typedef struct dd_jj {
     modeldata *mod;
     int p_node, m_node;
   } sub_jj;
+
+/* pi junction */  /* addition */
+
+typedef struct d_pjj {
+    double area;
+    double v_ic;
+    double phi_ic;
+    double ic;
+    double ic_current;
+    double ic_past;
+    double cap;
+    double gg;
+    double gn;
+    double glarge;
+    long n_plus, n_minus;
+    long n_phi;
+    char *con_dev;
+    m_data *mptr_pp, *mptr_pm, *mptr_mp, *mptr_mm;
+    modeldata *mod;
+    int which_piece;
+    double vn_guess;
+    double poly_coeff[POLY_ORDER+1];
+  }  dev_pjj;  
+
+typedef struct dd_pjj {
+    double area;
+    double v_ic;
+    double phi_ic;
+    long n_plus, n_minus;
+    long n_phi;
+    char *con_dev;
+    modeldata *mod;
+    int p_node, m_node;
+  } sub_pjj;
+
 
 
 /* mutual inductance */

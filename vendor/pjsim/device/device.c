@@ -55,6 +55,10 @@ find_dev(char *real_name, int type)
     case JJ    : 
          return(search_name_dev(jj_array, jj_count, temp_name->name));
 
+    /* addition */
+    case P_JJ  :
+         return(search_name_dev(pjj_array, pjj_count, temp_name->name));
+
     case MUTUAL_L : 
          return(search_name_dev(mut_array, mut_count, 
                                 temp_name->name)); 
@@ -183,6 +187,25 @@ add_dev(long name, int type, char *data)
          temp = jj_tail;
          jj_count++;
          break;
+
+    /* addition */
+    case P_JJ    : 
+
+         if (pjj == NULL) 
+         { 
+           pjj = (device *) mycalloc(1, sizeof(device));
+           pjj_tail = pjj;
+         } 
+         else
+         {
+           pjj_tail->next_dev = (device *) 
+                                  mycalloc(1, sizeof(device));
+           pjj_tail = pjj_tail->next_dev;
+         }
+         temp = pjj_tail;
+         pjj_count++;
+         break;
+    /* addition */
 
     case MUTUAL_L : 
 

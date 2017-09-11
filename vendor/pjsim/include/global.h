@@ -101,6 +101,12 @@ device *jj, *jj_tail;
 long jj_count;
 long *jj_array;
 
+/* addition */
+device *pjj, *pjj_tail;
+long pjj_count;
+long *pjj_array;
+/* addition */
+
 device *vsource, *vsource_tail;
 long vsource_count;
 long *vsource_array;

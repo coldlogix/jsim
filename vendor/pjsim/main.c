@@ -140,7 +140,7 @@ run_jsim()
     setup_device();
     setup_matrix();
     get_breakpoint();
-    
+
     gettimeofday(&now, NULL);
     t = now.tv_sec + now.tv_usec*1e-6;
     time_loop(hptr);

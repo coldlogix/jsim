@@ -185,9 +185,15 @@ step_control(double current_step, double *new_step, double *hptr)
 
   h = jj_step_limit(current_step);
 
+  if (h < smallest) smallest = h;
+
+  /* addition */
+  h = pjj_step_limit(current_step);
 
   if (h < smallest) smallest = h;
   
+  /* addition */
+
   if (smallest > current_step + current_step)
   {
      if (last_solve_count > lu_solve_ratio) 
@@ -375,7 +381,6 @@ time_loop(double *hptr)
     } 
 
   }    /* while */
-
   printf("%-19s%6d     %-19s%6d\n","loop count",loop_count,
         "predictor count",guess_step_count);
   printf("%-19s%6d     %-19s%6ld\n","timestep count",timestep_count,
@@ -455,14 +460,16 @@ int
 guess_next(double step, double *newstep)
 {
   long i;
-  int jj_status, flux_status;
-  double jj_newstep, flux_newstep;
+  int jj_status, flux_status, pjj_status; /* addition */
+  double jj_newstep, flux_newstep, pjj_newstep; /* addition */
 
   jj_status = jj_apriori_step_limit(step, &jj_newstep);
 
+  pjj_status = pjj_apriori_step_limit(step, &pjj_newstep); /* addition */
+
   flux_status = ind_apriori_step_limit(step, &flux_newstep);
 
-  if ((jj_status == OK) && (flux_status == OK))
+  if ((jj_status == OK) && (flux_status == OK) && (pjj_status == OK))
   {
     *newstep = step;
 
@@ -478,7 +485,7 @@ guess_next(double step, double *newstep)
   }
   else
   {
-    *newstep = mymin(jj_newstep, flux_newstep);
+    *newstep = tri_min(jj_newstep, flux_newstep, pjj_newstep); /* modification */ /* addition */
     return(TOO_BIG);
   }
 
@@ -876,6 +883,7 @@ find_phi(double *hptr)
   int i;
   device *temp_dev;
   dev_jj *temp_jj;
+  dev_pjj *temp_pjj; /* addition */
   double xn, xn1, yn, yn1;
   
   temp_dev = jj;
@@ -896,7 +904,28 @@ find_phi(double *hptr)
     temp_dev = temp_dev->next_dev;
   }
 
+  /* addition */
+  temp_dev = pjj;
+
+  while (temp_dev != NULL)
+  {
+    temp_pjj = (dev_pjj *) temp_dev->data;
+    
+    xn = x_unk_copy[temp_pjj->n_plus]->xn;
+    xn1 = *(x_unk_copy[temp_pjj->n_plus]->xpast);
+
+    yn = x_unk_copy[temp_pjj->n_minus]->xn;
+    yn1 = *(x_unk_copy[temp_pjj->n_minus]->xpast);
+
+    x_unknown[temp_pjj->n_phi]->xn = *(x_unknown[temp_pjj->n_phi]->xpast)
+         + E_HBAR*(*hptr)*(xn - yn + xn1 - yn1);  
+   
+    temp_dev = temp_dev->next_dev;
+  }
+  /* addition */
+
 }  /* find_phi */
+
 
 
 void
@@ -952,6 +981,7 @@ iteration_update()
   long i;
 
   jj_iteration_update();
+  pjj_iteration_update(); /* addition */
 
   for (i = 0; i <= eqn_count; i++)
   {
@@ -971,6 +1001,7 @@ matrix_iteration_update(int source_only, double *hptr)
   int need_lu;
   
   jj_fix_trap(source_only, &need_lu, hptr);
+  pjj_fix_trap(source_only, &need_lu, hptr); /* addition */
   resis_trap(source_only);
   cap_trap(source_only, hptr);
   ind_trap(source_only, hptr);
@@ -990,6 +1021,7 @@ matrix_nonlin_iteration_update(int source_only, double *hptr)
   int need_lu;
   
   jj_fix_trap(source_only, &need_lu, hptr);
+  pjj_fix_trap(source_only, &need_lu, hptr);  /* addition */
   return(need_lu);
 
 
@@ -1002,6 +1034,7 @@ update_device(double *hptr)
 
   update_transline(hptr);
   update_jj();
+  update_pjj(); /* addition */
 
 }  /* update_device */
 
@@ -1014,6 +1047,17 @@ get_pr_jjic(double inc_rate, dev_jj *temp_jj)
          (temp_jj->ic_current - temp_jj->ic_past) * inc_rate);
 
 }  /* get_pr_jjic */
+
+/* addition */
+double
+get_pr_pjjic(double inc_rate, dev_pjj *temp_pjj)
+{
+  
+  return(temp_pjj->ic_past + 
+         (temp_pjj->ic_current - temp_pjj->ic_past) * inc_rate);
+
+}  /* get_pr_pjjic */
+/* addition */
 
 
 double
@@ -1125,6 +1169,14 @@ print_tran(double the_time, double inc_rate)
              jj_tran_print(fptmp, inc_rate, temp->prtype, 
                             temp->subtype, temp->print_dev);
              break;
+
+        /* addition */
+        case P_JJ :
+ 
+             pjj_tran_print(fptmp, inc_rate, temp->prtype, 
+                            temp->subtype, temp->print_dev);
+             break;
+        /* addition */
 
         case TRAN_NO_LOSS :
  

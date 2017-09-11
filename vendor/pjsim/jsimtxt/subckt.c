@@ -496,6 +496,14 @@ sub_to_devlist(char *dev_name, int type, char *data)
     
          return(jjsub_to_devlist(dev_name, type, data));
 
+    /* addition */
+
+     case P_JJ : 
+    
+         return(pjjsub_to_devlist(dev_name, type, data));
+
+    /* addition */
+
     case MUTUAL_L : 
     
          return(mutsub_to_devlist(dev_name, type, data));

@@ -45,6 +45,14 @@ free_devarray()
     free((char *) jj_array);
     jj_array = NULL;
   }
+  
+  /* addition */
+  if (pjj_array != NULL)
+  {
+    free((char *) pjj_array);
+    pjj_array = NULL;
+  }
+  /* addition */
 
   if (mut_array != NULL)
   {

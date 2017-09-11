@@ -5,8 +5,8 @@ CC = cc
 # for SYSV compilers that gag on ranlib (like SCO's), comment out next line
 LIBRARY = ranlib
 
-jsim: main.o jsimtxt.a device.a
-	$(CC) -O -o jsim main.o jsimtxt.a device.a jsimtxt.a ${LINKS}
+pjsim: main.o jsimtxt.a device.a
+	$(CC) -O -o pjsim main.o jsimtxt.a device.a jsimtxt.a ${LINKS}
 
 clean::
 	rm -f *.o *.a jsimtxt/*.o device/*.o jsim

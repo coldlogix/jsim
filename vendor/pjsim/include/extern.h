@@ -101,6 +101,12 @@ extern device *jj, *jj_tail;
 extern long jj_count;
 extern long *jj_array;
 
+/* addition */
+extern device *pjj, *pjj_tail;
+extern long pjj_count;
+extern long *pjj_array;
+/* addition */
+
 extern device *vsource, *vsource_tail;
 extern long vsource_count;
 extern long *vsource_array;
@@ -216,6 +222,7 @@ extern int  read_double(double*,char*,int);
 extern double myabs(double);
 extern double mymax(double,double);
 extern double mymin(double,double);
+extern double tri_min(double,double,double); /* addition */
 extern int  get_string_type(char*);
 extern int  get_devname_type(char*);
 extern int  get_string_keyword(char*);
@@ -363,6 +370,7 @@ extern int  matrix_iteration_update(int,double*);
 extern int  matrix_nonlin_iteration_update(int,double*);
 extern void update_device(double*);
 extern double get_pr_jjic(double,dev_jj*);
+extern double get_pr_pjjic(double,dev_pjj*);  /* addition */
 extern double get_pr_val(double,long,int);
 extern void print_tran(double,double);
 
@@ -422,6 +430,24 @@ extern void jj_iteration_update(void);
 extern double jj_step_limit(double);
 extern int  jj_apriori_step_limit(double,double*);
 extern void jj_tran_print(FILE*,double,int,int,device*);
+
+/* pjj.c */ /* addition */
+extern void read_pjj(void);
+extern device *pjj_to_devlist(long,int,long*,long*,double*,modeldata*);
+extern device *pjj_to_deftree(char*,int,long*,long*,double*,modeldata*);
+extern device *pjjsub_to_devlist(char*,int,char*);
+extern void get_pjjmodel(void);
+extern device *add_pjj(long,double,double,double,long,long,char*,modeldata*);
+extern void pjj_dependent(void);
+extern void pjj_matrix(void);
+extern double pjj_condev_i(dev_pjj*,double);
+extern void pjj_quasi(dev_pjj*,double,int*,double*,double*);
+extern void pjj_fix_trap(int,int*,double*);
+extern void update_pjj(void);
+extern void pjj_iteration_update(void);
+extern double pjj_step_limit(double);
+extern int  pjj_apriori_step_limit(double,double*);
+extern void pjj_tran_print(FILE*,double,int,int,device*);
 
 /* mutual.c */
 extern void read_mut(void);

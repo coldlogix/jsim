@@ -9,6 +9,7 @@ device.o   \
 inductor.o \
 isource.o  \
 jj.o       \
+pjj.o      \
 mutual.o   \
 resistor.o \
 vsource.o  \

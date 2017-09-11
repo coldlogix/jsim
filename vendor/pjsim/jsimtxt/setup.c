@@ -120,6 +120,12 @@ init_dev_global()
   jj_count = 0;
   jj_array = NULL;
 
+  /* addition */
+  pjj = pjj_tail = NULL;
+  pjj_count = 0;
+  pjj_array = NULL;
+  /* addition */
+
   mut = mut_tail = NULL;
   mut_count = 0;
   mut_array = NULL;
@@ -197,7 +203,7 @@ init_unknown(unknown *x)
 {
   long i;
    
-  for (i = 0; i <= eqn_count + jj_count + 1; i++) 
+  for (i = 0; i <= eqn_count + jj_count + pjj_count + 1; i++) /* modification */ /* addition */
   {
     x[i] = (x_data *) mycalloc(1, sizeof(x_data));
     x[i]->type = VOLT;
@@ -303,6 +309,7 @@ read_deck()
       case CAP :      read_cap(); break;
       case INDUCT :   read_ind(); break;
       case JJ :       read_jj(); break;
+      case P_JJ:      read_pjj(); break; /* addition */
       case MUTUAL_L : read_mut(); break;
       case V_SOURCE : read_vs(); break;
       case I_SOURCE : read_is(); break;
@@ -362,7 +369,7 @@ read_deck()
         continue;
       }
 
-      if (*pl->dev_name == 'b' || *pl->dev_name =='B') {
+      if (*pl->dev_name == 'b' || *pl->dev_name =='B') {    /**/
 
         if (pl->prtype == VOLT)  {
           fprintf(rawfp," %d %s.V voltage\n",raw_cntr,pl->dev_name);
@@ -594,7 +601,8 @@ get_arrays()
   resis_array = get_dev_array(TRUE, resis, resis_count); 
   cap_array = get_dev_array(TRUE, cap, cap_count); 
   ind_array = get_dev_array(TRUE, ind, ind_count); 
-  jj_array = get_dev_array(TRUE, jj, jj_count); 
+  jj_array = get_dev_array(TRUE, jj, jj_count);
+  pjj_array = get_dev_array(TRUE, pjj, pjj_count); /* addition */
   vsource_array = get_dev_array(TRUE, vsource, vsource_count); 
   isource_array = get_dev_array(TRUE, isource, isource_count); 
   mut_array = get_dev_array(TRUE, mut, mut_count); 
@@ -611,7 +619,8 @@ do_dependent()
 {
 
   mut_dependent();
-  jj_dependent(); 
+  jj_dependent();
+  pjj_dependent(); /* addition */
     
 }     /* do_dependent */
 
@@ -621,6 +630,7 @@ get_model()
 {
 
   get_jjmodel();
+  get_pjjmodel(); /* addition */
 
 }   /* get_model */
 
@@ -690,6 +700,7 @@ setup_A_matrix()
   cap_matrix();
   ind_matrix();
   jj_matrix();
+  pjj_matrix(); /* addition */
   mut_matrix();
   trans_matrix();
   vs_matrix();
@@ -705,8 +716,8 @@ setup_matrix()
 {
   A_matrix = &my_matrix;
   init_A(A_matrix);
-  x_unknown = (unknown *) mycalloc(eqn_count + jj_count + 2,
-                                   sizeof(unknown));
+  x_unknown = (unknown *) mycalloc(eqn_count + jj_count + pjj_count + 2,
+                                   sizeof(unknown));     /* addition *//* modification */
   x_unk_copy = (unknown *) mycalloc(eqn_count + 2,
                                     sizeof(unknown));
   init_unknown(x_unknown);
@@ -721,7 +732,7 @@ setup_matrix()
 
   ground_node = eqn_count + 1;
   phi_start = ground_node + 1;
-  phi_end = eqn_count + jj_count + 1;
+  phi_end = eqn_count + jj_count + pjj_count + 1; /* addition *//* modification */
 
   setup_A_matrix();
   setup_x_unknown();
@@ -850,6 +861,7 @@ print_devlist()
   dev_cap *temp_cap;
   dev_ind *temp_ind;
   dev_jj *temp_jj;
+  dev_pjj *temp_pjj; /* addition */
   dev_vsource *temp_vs;
   dev_isource *temp_is;
   dev_mut *temp_mut;
@@ -931,6 +943,35 @@ print_devlist()
 
     temp = temp->next_dev;
   }
+
+  /* addition */
+  temp = pjj;
+
+  while (temp != NULL)
+  {
+    temp_pjj = (dev_pjj *) temp->data;
+    temp_name = search_name(temp->name);
+
+    fprintf(dbfp, "%s %ld %ld %ld %.2e %.2e %.2e ", 
+            temp_name->real_name, temp_pjj->n_plus, temp_pjj->n_minus, 
+            temp_pjj->n_phi, temp_pjj->area, 
+            temp_pjj->v_ic, temp_pjj->phi_ic);
+
+    if (temp_pjj->mod != NULL)
+      fprintf(dbfp, "model %s", temp_pjj->mod->name);
+    else
+      fprintf(dbfp, "model UNDEFINED");
+
+    if (temp_pjj->con_dev != NULL) 
+    {
+      temp_name = search_name(((device *) temp_pjj->con_dev)->name);
+      fprintf(dbfp, " condev %s\n", temp_name->real_name);
+    }
+    else fprintf(dbfp, "\n");
+
+    temp = temp->next_dev;
+  }
+  /* addition */
 
   temp = vsource;
   
@@ -1030,6 +1071,7 @@ myprint_deftree(sub_def *the_sub_def, FILE *fp)
   sub_cap *temp_cap;
   sub_ind *temp_ind;
   sub_jj *temp_jj;
+  sub_pjj *temp_pjj; /* addition */
   sub_vsource *temp_vs;
   sub_isource *temp_is;
   sub_mut *temp_mut;
@@ -1088,6 +1130,24 @@ myprint_deftree(sub_def *the_sub_def, FILE *fp)
                           temp_jj->con_dev);
                 else fprintf(fp, "\n");
                 break;
+
+      /* addition */
+      case P_JJ : temp_pjj = (sub_pjj *) temp->data;
+                fprintf(fp, "%s %ld (%d) %ld (%d) %ld ",
+                        (char *) temp->name,
+                        temp_pjj->n_plus, temp_pjj->p_node,
+                        temp_pjj->n_minus, temp_pjj->m_node,
+                        temp_pjj->n_phi); 
+                fprintf(fp, "%.2e %.2e %.2e model %s",  
+                        temp_pjj->area,
+                        temp_pjj->v_ic, temp_pjj->phi_ic,
+                        (char *) temp_pjj->mod);
+                if (temp_pjj->con_dev != NULL)
+                  fprintf(fp, " condev %s\n", 
+                          temp_pjj->con_dev);
+                else fprintf(fp, "\n");
+                break;
+      /* addition */
 
       case V_SOURCE : 
 

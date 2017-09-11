@@ -349,6 +349,17 @@ mymin(double x, double y)
 
 }   /* mymin */
 
+/* addition */
+double
+tri_min(double x, double y, double z)
+{
+  double p;
+  p = x;
+  if(y < p) p = y;
+  if(z < p) p = z;
+  return(p);
+}
+/* addition */
 
 int
 get_string_type(char *str)
@@ -365,6 +376,7 @@ get_string_type(char *str)
     case 'L' : type = INDUCT; break;
     case 'K' : type = MUTUAL_L; break;
     case 'B' : type = JJ; break;
+    case 'P' : type = P_JJ; break; /* addition */
     case 'X' : type = SUB_C; break;
     case 'V' : type = V_SOURCE; break;
     case 'I' : type = I_SOURCE; break;
@@ -410,6 +422,7 @@ get_devname_type(char *str)
     case 'L' : return(INDUCT);
     case 'K' : return(MUTUAL_L);
     case 'B' : return(JJ);
+    case 'P' : return(P_JJ); /* addition */
     case 'V' : return(V_SOURCE);
     case 'I' : return(I_SOURCE);
     case 'T' : return(TRANSLINE);
@@ -511,6 +524,7 @@ is_dc_device(int devtype)
   switch (devtype)
   {
     case JJ :
+    case P_JJ : /* addition */
     case LOSSLESS_LINE :
     case V_SOURCE :
     case PWL_V :
