@@ -55,6 +55,7 @@ annotated in the log messages for the commits for each of the branches.
 *  vendor_stellenbosch_jsim_n
 *  vendor_whiteley_jsim_2.0d
 *  vendor_whiteley_jsim_2.0e
+*  vendor_yamanashi_pjsim
 
 History
 =======
