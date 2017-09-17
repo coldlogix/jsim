@@ -14,13 +14,16 @@ if(NOT RESULT)
   list(APPEND CMAKE_REQUIRED_LIBRARIES m)
   CHECK_FUNCTION_EXISTS(pow RESULT)
   if(RESULT)
-    target_link_libraries(yourtarget m)
     list(APPEND LIBS m)
   else()
     message(FATAL_ERROR "No pow() found")
   endif()
 endif()
 
+if (WIN32)
+    # Win32 needs to know to define M_PI
+    add_definitions(-D_USE_MATH_DEFINES)
+endif (WIN32)
 
 add_executable(jsim
     main.c
