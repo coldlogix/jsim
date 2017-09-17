@@ -41,7 +41,7 @@ install:
 
 # scripts to run before build
 before_build:
-  - cmd: cd C:\projects\jsim
+  - cmd: cd C:\projects\jsim\vendor\jsim
   - cmd: md build
   - cmd: cd build
   - cmd: if "%platform%"=="Win32" set CMAKE_GENERATOR_NAME=Visual Studio 14 2015
@@ -49,7 +49,7 @@ before_build:
   - cmd: cmake -G "%CMAKE_GENERATOR_NAME%" -DCMAKE_BUILD_TYPE=%configuration% ..
 
 build:
-  project: C:\projects\jsim\build\jsim.sln # path to Visual Studio solution or project
+  project: C:\projects\jsim\vendor\jsim\build\jsim.sln # path to Visual Studio solution or project
   parallel: true                           # enable MSBuild parallel builds
 #  verbosity: quiet                         # MSBuild verbosity level (quiet|minimal|normal|detailed)
 

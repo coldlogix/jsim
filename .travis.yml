@@ -30,7 +30,7 @@ branches:
 
 # Build steps
 script:
-  - mkdir vendor/jsim-2.0e/build
-  - cd vendor/jsim-2.0e/build
+  - mkdir vendor/jsim/build
+  - cd vendor/jsim/build
   - cmake .. && make
 
