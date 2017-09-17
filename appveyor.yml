@@ -38,7 +38,6 @@ branches:
 # scripts that run after cloning repository
 install:
   - ps: cd C:\projects\jsim
-  - ps: .\appveyor_install.ps1
 
 # scripts to run before build
 before_build:
