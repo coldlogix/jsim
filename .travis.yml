@@ -40,7 +40,7 @@ branches:
 
 # Build steps
 script:
-  - mkdir jsim/vendor/jsim-2.0e/build
-  - cd jsim/vendor/jsim-2.0e/build
+  - mkdir vendor/jsim-2.0e/build
+  - cd vendor/jsim-2.0e/build
   - cmake .. && make
 
