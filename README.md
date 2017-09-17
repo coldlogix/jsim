@@ -17,18 +17,18 @@ unlikely that you want to use JSIM.
 This repository has been updated to use CMake to build, and should work
 on a wide variety of different architectures.  It's known to compile on
 Mac OSX Sierra and Ubuntu, but should compile on most any unix-like
-operating system.  I recommend that you install and build using CMake,
-though the original makefiles have been preserved in the various branches
-and might still work.
+operating system.  It is not currently building on windows.  Please make
+your interst known if you would like to run jsim on windows.
 
-[![Build Status](https://travis-ci.org/coldlogix/jsim.svg?branch=master)](https://travis-ci.org/coldlogix/jsim)
+* linux/osx [![Build Status](https://travis-ci.org/coldlogix/jsim.svg?branch=master)](https://travis-ci.org/coldlogix/jsim)
+* win32 [![Build status](https://ci.appveyor.com/api/projects/status/472h0i7icsdekb1n?svg=true)](https://ci.appveyor.com/project/coldlogix/jsim)
 
 Here is the super quick guide to get up and running:
 
 Install CMake, and an appropriate build environment on your system.
 ```bash
 git clone https://github.com/coldlogix/jsim.git
-cd jsim/vendor/jsim-2.0e/
+cd jsim/vendor/jsim/
 mkdir build
 cd build
 cmake ..
@@ -53,6 +53,7 @@ and contribute your changes back to the community.
 The following branches are available, and their origin and histories are
 annotated in the log messages for the commits for each of the branches.
 
+*  master
 *  vendor_ortlepp_jsim_n
 *  vendor_stellenbosch_jsim_n
 *  vendor_whiteley_jsim_2.0d
