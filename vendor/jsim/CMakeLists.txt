@@ -8,15 +8,16 @@ add_subdirectory(jsim_n-tests)
 
 include(CheckFunctionExists)
 
-CHECK_FUNCTION_EXISTS(pow RESULT)
-if(NOT RESULT)
-  unset(RESULT)
-  list(APPEND CMAKE_REQUIRED_LIBRARIES m)
-  CHECK_FUNCTION_EXISTS(pow RESULT)
-  if(RESULT)
-    list(APPEND LIBS m)
+CHECK_FUNCTION_EXISTS(pow NOT_NEED_LIBM)
+if(NOT_NEED_LIBM)
+  set(LIB_MATH "")
+else()
+  set(CMAKE_REQUIRED_LIBRARIES m)
+  CHECK_FUNCTION_EXISTS(pow HAVE_LIBM)
+  if(HAVE_LIBM)
+    set(LIB_MATH m)
   else()
-    message(FATAL_ERROR "No pow() found")
+    message(FATAL_ERROR "No libm found for math support")
   endif()
 endif()
 
@@ -43,7 +44,7 @@ target_link_libraries(jsim
   PUBLIC
     jsimtxt
     jsimdevice
-    ${LIBS}
+    ${LIB_MATH}
 )
 
 
@@ -64,7 +65,7 @@ target_link_libraries(jsim_n
   PUBLIC
     jsimtxt
     jsimdevice
-    ${LIBS}
+    ${LIB_MATH}
 )
 #doc: 
 #	nroff -ms manual.ms

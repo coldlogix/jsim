@@ -5,15 +5,16 @@ project(jsim_n_test C)
 
 include(CheckFunctionExists)
 
-CHECK_FUNCTION_EXISTS(pow RESULT)
-if(NOT RESULT)
-  unset(RESULT)
-  list(APPEND CMAKE_REQUIRED_LIBRARIES m)
-  CHECK_FUNCTION_EXISTS(pow RESULT)
-  if(RESULT)
-    list(APPEND LIBS m)
+CHECK_FUNCTION_EXISTS(pow NOT_NEED_LIBM)
+if(NOT_NEED_LIBM)
+  set(LIB_MATH "")
+else()
+  set(CMAKE_REQUIRED_LIBRARIES m)
+  CHECK_FUNCTION_EXISTS(pow HAVE_LIBM)
+  if(HAVE_LIBM)
+    set(LIB_MATH m)
   else()
-    message(FATAL_ERROR "No pow() found")
+    message(FATAL_ERROR "No libm found for math support")
   endif()
 endif()
 
@@ -28,7 +29,7 @@ add_executable(ah
 
 target_link_libraries(ah
   PUBLIC
-    ${LIBS}
+    ${LIB_MATH}
 )
 
 add_executable(rt
@@ -37,5 +38,5 @@ add_executable(rt
 
 target_link_libraries(rt
   PUBLIC
-    ${LIBS}
+    ${LIB_MATH}
 )
