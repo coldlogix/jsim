@@ -18,7 +18,6 @@
 #include "jsim.h"
 #include "extern.h"
 #include "setup.h"
-#include <strings.h>
 #include <stdlib.h>
 #include <string.h>
 

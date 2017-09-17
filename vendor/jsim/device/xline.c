@@ -17,7 +17,7 @@
 
 #include "jsim.h"
 #include "extern.h"
-#include <strings.h>
+#include <string.h>
 
 void
 read_transline()
