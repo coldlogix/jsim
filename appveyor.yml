@@ -29,8 +29,8 @@ clone_folder: C:\projects\jsim
 # branches to build
 branches:
   # whitelist
-  # only: 
-  #   - master
+  only: 
+     - master
   # blacklist
   #except:
   #  - gh-pages
