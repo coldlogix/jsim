@@ -573,7 +573,7 @@ transline_trap(int source_only, double *hptr)
   dev_tran_noloss *temp_noloss;
   device *temp_dev;
   double g_val;
-
+  int index;
 
   temp_dev = xline;
   
