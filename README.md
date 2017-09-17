@@ -21,6 +21,8 @@ operating system.  I recommend that you install and build using CMake,
 though the original makefiles have been preserved in the various branches
 and might still work.
 
+[![Build Status](https://travis-ci.org/coldlogix/jsim.svg?branch=master)](https://travis-ci.org/coldlogix/jsim)
+
 Here is the super quick guide to get up and running:
 
 Install CMake, and an appropriate build environment on your system.
