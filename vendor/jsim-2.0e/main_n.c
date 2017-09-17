@@ -50,6 +50,8 @@
 
 #include "jsim.h"
 #include "global.h"
+#include "setup.h"
+
 #include <sys/types.h>
 #include <sys/timeb.h>
 

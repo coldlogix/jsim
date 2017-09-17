@@ -929,7 +929,7 @@ print_dev_array(long *dev_array, long dev_count)
   long i;
 
   for (i = 0; i < dev_count; i++)
-    printf("dev %s %d\n", 
+    printf("dev %s %lu\n", 
            (char*)((device *) *(dev_array + i))->name,
            strlen((char*)((device *) *(dev_array + i))->name));
 

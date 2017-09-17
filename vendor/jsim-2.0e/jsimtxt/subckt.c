@@ -17,6 +17,8 @@
 
 #include "jsim.h"
 #include "extern.h"
+#include <string.h>
+#include <stdlib.h>
 
 long name;
 modeldata *modptr;

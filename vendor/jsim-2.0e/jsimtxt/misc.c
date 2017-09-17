@@ -19,6 +19,7 @@
 #include "extern.h"
 #include "setup.h"
 #include <strings.h>
+#include <stdlib.h>
 
 char *
 mycalloc(int num, int size)

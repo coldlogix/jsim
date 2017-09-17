@@ -17,7 +17,7 @@
 
 #include "jsim.h"
 #include "extern.h"
-
+#include <strings.h>
 
 void
 read_transline()
@@ -297,6 +297,8 @@ add_transline(long name, int type, double *dataptr, long n1_plus,
   dev_tran_noloss *temp;
   sub_tran_noloss *temp_sub;
    
+  data=NULL;
+    
   if (current_sub_def == NULL)
   {
     if (type == TRAN_NO_LOSS)

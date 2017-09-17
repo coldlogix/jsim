@@ -30,13 +30,13 @@ a = 1 +3.5156229 *t2 + 3.0899224*t4 + 1.2067492*t4*t2
 return a;
 }
 
-main()
+int main(int argc, char *argv[])
 
 {
 double v, integral, dx, x, y ,gam ,i;
 int j,jmax;
 printf("Enter current, gamma \n");
-scanf("%F %F", &i, &gam);
+scanf("%lF %lF", &i, &gam);
 jmax = 100 + 60/gam;
 integral = 0;
 dx = M_PI/jmax/2;
