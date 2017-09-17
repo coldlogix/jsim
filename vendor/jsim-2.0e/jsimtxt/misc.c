@@ -20,6 +20,7 @@
 #include "setup.h"
 #include <strings.h>
 #include <stdlib.h>
+#include <string.h>
 
 char *
 mycalloc(int num, int size)
@@ -34,7 +35,8 @@ mycalloc(int num, int size)
 
 
 void string_to_upper(char *line) {
-    for (int a=0; line[a]!=0; a++) {
+    int a;
+    for (a=0; line[a]!=0; a++) {
         int c=line[a];
         if ((c>='a') && (c<='z')) {
             line[a] = c - 'a' + 'A';

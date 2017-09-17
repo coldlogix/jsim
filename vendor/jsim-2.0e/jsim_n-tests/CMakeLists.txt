@@ -6,7 +6,16 @@ add_executable(ah
     ah.c
 )
 
+target_link_libraries(ah
+  PUBLIC
+    m
+)
+
 add_executable(rt
     rt.c
 )
 
+target_link_libraries(rt
+  PUBLIC
+    m
+)

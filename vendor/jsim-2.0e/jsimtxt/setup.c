@@ -496,7 +496,8 @@ included_file included_files[MAX_INCLUDE_FILES];
  */
 
 void print_file_stack() {
-    for (int f=current_input_file; f>=0; f--) {
+    int f;
+    for (f=current_input_file; f>=0; f--) {
         if (f!=current_input_file) {
             printf("Included in ");
         }

@@ -9,7 +9,6 @@ set (JSTCOMMONSRC
     misc.c
     model.c
     morspace.c 
-    picture.c
     print.c
     setup.c
     subckt.c
