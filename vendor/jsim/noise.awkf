@@ -1,0 +1,7 @@
+BEGIN {const=5.529e-23}
+$1 ~ /^[rR]/&&!/[rR][zZ]/ {
+print $0
+noise = sqrt(const*temperature/$4)*1e12
+printf "i%s %s %s NOISE(%fp 0.0 1.0p) \n",$1,$2,$3,noise
+}
+$1  !~/^[Rr]/||/^[Rr][Zz]/ {print $0}
