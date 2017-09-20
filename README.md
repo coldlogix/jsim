@@ -18,7 +18,7 @@ This repository has been updated to use CMake to build, and should work
 on a wide variety of different architectures.  It's known to compile on
 Mac OSX Sierra and Ubuntu, but should compile on most any unix-like
 operating system.  It is not currently building on windows.  Please make
-your interst known if you would like to run jsim on windows.
+your interest known if you would like to run JSIM on windows.
 
 * linux/osx [![Build Status](https://travis-ci.org/coldlogix/jsim.svg?branch=master)](https://travis-ci.org/coldlogix/jsim)
 * win32 [![Build status](https://ci.appveyor.com/api/projects/status/472h0i7icsdekb1n?svg=true)](https://ci.appveyor.com/project/coldlogix/jsim)
@@ -68,7 +68,7 @@ of the various revisions to jsim that have occured over the years
 and provide one central manageable point for future work on JSIM.
 
 The original thesis from Emerson S. Fang was written in 1989, so
-there is a very deep and old histroy for JSIM, with many many people
+there is a very deep and old history for JSIM, with many many people
 touching and modifying the source over many many years.  I have
 attempted as best as possible to organize and properly parent the 
 various versions I've found in this repository, using branches for
